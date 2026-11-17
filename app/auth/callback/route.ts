@@ -1,0 +1,22 @@
+import { NextResponse, type NextRequest } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { ensureSpanishLearner } from "@/lib/supabase/learner";
+
+export async function GET(request: NextRequest) {
+  const { searchParams, origin } = new URL(request.url);
+  const code = searchParams.get("code");
+  const requestedNext = searchParams.get("next") ?? "/dashboard";
+  const next = requestedNext.startsWith("/") && !requestedNext.startsWith("//") ? requestedNext : "/dashboard";
+
+  if (code) {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) await ensureSpanishLearner(supabase, data.user);
+      return NextResponse.redirect(new URL(next, origin));
+    }
+  }
+
+  return NextResponse.redirect(new URL("/login?error=Email%20confirmation%20could%20not%20be%20completed.", origin));
+}
