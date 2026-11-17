@@ -11,13 +11,13 @@ export default function Home() {
     <header className="site-header">
       <Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link>
       <nav><a href="#approach">Our approach</a><a href="#course">The course</a></nav>
-      <div className="header-actions"><Link className="login-link" href="/dashboard">Sign in</Link><Link className="button button-dark" href="/dashboard">Explore the course <span>↗</span></Link></div>
+      <div className="header-actions"><Link className="login-link" href="/login">Sign in</Link><Link className="button button-dark" href="/signup">Explore the course <span>↗</span></Link></div>
     </header>
     <section className="hero wrap">
       <div className="hero-copy"><div className="eyebrow"><i/> A more thoughtful way to learn Spanish</div>
         <h1>Learn Spanish.<br/><span>Actually use it.</span></h1>
         <p className="hero-lede">A structured Spanish course that helps you understand how the language works, speak more naturally, and keep making progress.</p>
-        <div className="hero-buttons"><Link className="button button-primary" href="/dashboard">Start learning <span>→</span></Link><a className="button button-soft" href="#approach">See the approach</a></div>
+        <div className="hero-buttons"><Link className="button button-primary" href="/signup">Start learning <span>→</span></Link><a className="button button-soft" href="#approach">See the approach</a></div>
         <div className="hero-footnote"><span className="mini-avatars"><i>ES</i><i>LA</i><i>¡</i></span> Built around real Spanish, not streaks and gimmicks.</div>
       </div>
       <div className="hero-visual"><div className="orbit orbit-a"/><div className="orbit orbit-b"/>
@@ -30,11 +30,11 @@ export default function Home() {
     <section className="section wrap" id="approach"><div className="section-heading"><div><div className="eyebrow">THE NAHTIVE METHOD</div><h2>Learn with purpose.<br/><span>Build real fluency.</span></h2></div><p>Spanish becomes easier to use when you understand the patterns behind it. Every lesson has a clear job—and every exercise moves you toward using the language independently.</p></div>
       <div className="benefit-grid">{benefits.map(([n,title,body])=><article className="benefit-card" key={n}><span>{n}</span><h3>{title}</h3><p>{body}</p><b>↗</b></article>)}</div>
     </section>
-    <section className="course-band" id="course"><div className="wrap course-layout"><div><div className="eyebrow">A COURSE THAT BUILDS</div><h2>One clear path.<br/><span>From A1 to C2.</span></h2><p>Move through a carefully sequenced curriculum with lessons designed for your level. Practice reading, grammar, vocabulary, sentence construction, and real communication.</p><Link className="button button-primary" href="/dashboard">Preview your learning space <span>→</span></Link></div>
+    <section className="course-band" id="course"><div className="wrap course-layout"><div><div className="eyebrow">A COURSE THAT BUILDS</div><h2>One clear path.<br/><span>From A1 to C2.</span></h2><p>Move through a carefully sequenced curriculum with lessons designed for your level. Practice reading, grammar, vocabulary, sentence construction, and real communication.</p><Link className="button button-primary" href="/signup">Preview your learning space <span>→</span></Link></div>
       <div className="path-card"><div className="path-heading"><b>THE LEARNING PATH</b><span>CEFR FRAMEWORK</span></div>{["Foundations","Everyday confidence","Independent use","Confident expression","Advanced nuance","Mastery"].map((label,i)=><div className={"path-row "+(i===1?"current":"")} key={label}><b>{["A1","A2","B1","B2","C1","C2"][i]}</b><div className="path-bar"><i style={{width:[26,38,55,72,88,100][i]+"%"}}/></div><span>{label}</span><small>{i===1?"CURRENT":i===0?"START":"NEXT"}</small></div>)}<div className="path-note">✓ &nbsp; Progress is based on what you can understand and produce—not just what you finish.</div></div>
     </div></section>
     <section className="section wrap lesson-rhythm"><div><div className="eyebrow">INSIDE EVERY LESSON</div><h2>Learn it. Practice it.<br/><span>Make it yours.</span></h2><p>A consistent lesson rhythm makes it easier to focus on the language instead of figuring out what to do next.</p></div><div className="rhythm-list">{["Read for meaning","Notice the grammar","Build your own sentences","Check understanding"].map((s,i)=><div key={s}><span>0{i+1}</span><b>{s}</b><i>+</i></div>)}</div></section>
-    <section className="cta-band"><div className="wrap cta-inner"><div><div className="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div><h2>Make Spanish part<br/>of your everyday life.</h2></div><Link className="button button-white" href="/dashboard">Explore Nahtive <span>↗</span></Link><b className="cta-watermark">n.</b></div></section>
+    <section className="cta-band"><div className="wrap cta-inner"><div><div className="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div><h2>Make Spanish part<br/>of your everyday life.</h2></div><Link className="button button-white" href="/signup">Explore Nahtive <span>↗</span></Link><b className="cta-watermark">n.</b></div></section>
     <footer className="wrap footer"><Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link><span>Spanish learning, with intention.</span><span>© 2026 Nahtive</span></footer>
   </main>;
 }
