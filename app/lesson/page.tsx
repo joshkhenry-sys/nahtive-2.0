@@ -12,8 +12,8 @@ const blanks = [
   { prompt: "Por la tarde, _____ (regresar) a casa.", answer: "regresamos", hint: "nosotros · regresar" },
 ];
 const quiz = [
-  { q: "El sábado pasado, nosotros _____ en casa.", options: ["estudiamos", "estudiábamos", "estudiar"], answer: "estudiamos", why: "““El sábado pasado” refers to a completed time in the past. “Estudiamos” is the nosotros preterite form." },
-  { q: "Ayer, Marta _____ una película.", options: ["miró", "mira", "miraba"], answer: "miró", why: "“Miró” is the preterite form for ella/él/usted." },
+  { q: "Last Saturday, we _____ at home.", options: ["estudiamos", "estudiábamos", "estudiar"], answer: "estudiamos", why: "“El sábado pasado” refers to a completed time in the past. “Estudiamos” is the nosotros preterite form." },
+  { q: "Yesterday, Marta _____ a movie.", options: ["miró", "mira", "miraba"], answer: "miró", why: "“Miró” is the preterite form for ella/él/usted." },
   { q: "What is the yo form of “beber” in the preterite?", options: ["bebí", "bebió", "bebía"], answer: "bebí", why: "Regular -er and -ir verbs use -í for the yo form in the preterite." },
   { q: "Completa: Anoche, mis amigos _____ tarde.", options: ["llegaron", "llegamos", "llegan"], answer: "llegaron", why: "“Mis amigos” = ellos; llegar → llegaron." },
   { q: "Which sentence describes an action completed yesterday?", options: ["Normalmente cocino.", "Ayer cociné.", "Estoy cocinando."], answer: "Ayer cociné.", why: "The preterite presents the action as a completed event in the past." },
@@ -41,7 +41,7 @@ export default function A2PastLesson() {
     <header className="lesson-header">
       <Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link>
       <div className="lesson-header-center"><span>A2 · UNIDAD 04</span><b>Talking about the past</b></div>
-      <Link className="lesson-exit" href="/dashboard">Salir de la lección ↗</Link>
+      <Link className="lesson-exit" href="/dashboard">Exit lesson ↗</Link>
     </header>
     <div className="lesson-layout">
       <aside className="lesson-outline">
@@ -66,9 +66,9 @@ export default function A2PastLesson() {
           <div className="lesson-section-label">02 · UNDERSTAND THE STRUCTURE</div>
           <h1>The preterite: completed actions</h1>
           <p className="lesson-intro">We use the preterite to describe actions as completed events in the past. It often appears with time expressions such as <em>ayer</em>, <em>anoche</em>, <em>el lunes pasado</em> y <em>la semana pasada</em>.</p>
-          <div className="grammar-example"><span>AYER</span><strong>Ayer <em>preparé</em> café y <em>desayuné</em> con mi hermana.</strong><small>Dos acciones completadas en el pasado.</small></div>
+          <div className="grammar-example"><span>YESTERDAY</span><strong>Ayer <em>preparé</em> café y <em>desayuné</em> con mi hermana.</strong><small>Two actions completed in the past.</small></div>
           <h3 className="lesson-h3">Terminaciones regulares</h3>
-          <div className="conjugation-grid"><div><b>Verbos -AR · preparar</b>{[["yo","preparé"],["tú","preparaste"],["él / ella / usted","preparó"],["nosotros/as","preparamos"],["ellos / ellas / ustedes","prepararon"]].map(([p,v])=><div key={p}><span>{p}</span><strong>{v}</strong></div>)}</div><div><b>Verbos -ER / -IR · comer / vivir</b>{[["yo","comí / viví"],["tú","comiste / viviste"],["él / ella / usted","comió / vivió"],["nosotros/as","comimos / vivimos"],["ellos / ellas / ustedes","comieron / vivieron"]].map(([p,v])=><div key={p}><span>{p}</span><strong>{v}</strong></div>)}</div></div>
+          <div className="conjugation-grid"><div><b>-AR verbs · preparar</b>{[["I","preparé"],["you","preparaste"],["he / she / you (formal)","preparó"],["we","preparamos"],["they / you all","prepararon"]].map(([p,v])=><div key={p}><span>{p}</span><strong>{v}</strong></div>)}</div><div><b>-ER / -IR verbs · comer / vivir</b>{[["I","comí / viví"],["you","comiste / viviste"],["he / she / you (formal)","comió / vivió"],["we","comimos / vivimos"],["they / you all","comieron / vivieron"]].map(([p,v])=><div key={p}><span>{p}</span><strong>{v}</strong></div>)}</div></div>
           <div className="lesson-callout"><b>Watch out: one verb form can have more than one meaning</b><p><strong>Hablamos</strong> can be either present or preterite. Context tells you which tense is intended: “Normalmente hablamos” (present) / “Ayer hablamos” (preterite).</p></div>
           <h3 className="lesson-h3">Irregulares muy frecuentes</h3><p className="lesson-body"><strong>ir / ser → fui, fuiste, fue, fuimos, fueron</strong><br/><strong>hacer → hice, hiciste, hizo, hicimos, hicieron</strong><br/><strong>ver → vi, viste, vio, vimos, vieron</strong></p>
           <p className="lesson-note">Focus first on regular endings in this lesson. The irregular forms are introduced as high-frequency verbs you should learn to recognize.</p>
@@ -93,7 +93,7 @@ export default function A2PastLesson() {
         {step === 4 && <article className="lesson-panel">
           <div className="lesson-section-label">05 · INDEPENDENT PRODUCTION</div>
           <h1>Cuenta algo que hiciste</h1>
-          <p className="lesson-intro">Now use this structure to talk about your own life. Write complete sentences and connect your actions with <em>primero</em>, <em>después</em>, <em>luego</em> y <em>al final</em>.</p>
+          <p className="lesson-intro">Now use this structure to talk about your own life. Write complete sentences and connect your actions with <em>primero</em>, <em>después</em>, <em>luego</em> and <em>al final</em>.</p>
           <div className="production-prompts">{["What did you do yesterday morning?","Where did you go, or what did you do next?","How did your day end?"].map((q,i)=><div className="response-field" key={q}><label>{i+1}. {q}</label><textarea value={responses[i]} onChange={e=>updateResponse(i,e.target.value)} rows={3} placeholder="Ayer por la mañana..."/></div>)}</div>
           <div className="lesson-callout"><b>Review your writing</b><p>Did you use the preterite for completed actions? Do the verbs agree with their subjects? Are your ideas in a clear order?</p></div>
         </article>}
