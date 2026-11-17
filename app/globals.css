@@ -89,3 +89,52 @@
 .task-list button>span b{font-size:12px}.task-list button>span small{font-size:11px}
 .question-area>p:first-child{font-size:14px}.choice-list button{font-size:12px}
 }
+
+
+/* Stronger global type scale */
+body{font-size:17px}
+.site-header nav,.login-link{font-size:15px}.button{font-size:15px}.eyebrow{font-size:12px}
+.hero-lede{font-size:19px;line-height:1.8}.hero-footnote{font-size:13px}
+.section-heading>p,.course-layout>div:first-child>p,.lesson-rhythm>div:first-child>p{font-size:16px;line-height:1.85}
+.benefit-card>span{font-size:13px}.benefit-card h3{font-size:20px}.benefit-card p{font-size:15px;line-height:1.8}
+.path-heading{font-size:11px}.path-row>b{font-size:15px}.path-row>span{font-size:13px}.path-row>small{font-size:10px}.path-note{font-size:12px}
+.rhythm-list span{font-size:12px}.rhythm-list b{font-size:17px}.footer{font-size:12px}
+.learner-sidebar nav a{font-size:15px;padding:13px}.side-label{font-size:11px}
+.help-card b{font-size:15px}.help-card p{font-size:14px;line-height:1.7}.help-card a,.sidebar-bottom>a{font-size:13px}
+.learner-topbar>span:first-child{font-size:15px}.learner-topbar b{font-size:10px}.learner-profile{font-size:14px}
+.welcome h1{font-size:34px}.welcome p{font-size:16px;line-height:1.7}
+.level-badge small{font-size:10px}.level-badge span{font-size:12px}
+.continue-copy>small,.unit-label{font-size:11px}.continue-copy h2{font-size:32px}.continue-copy>p{font-size:16px;line-height:1.8}.lesson-meta{font-size:13px}.continue-copy .button{font-size:14px}
+.card-title small,.knowledge-head small,.next-card small{font-size:12px}.card-title h3,.knowledge-head h3{font-size:21px}.card-title>span{font-size:12px}
+.task-progress>div:first-child{font-size:13px}.task-list button>span b{font-size:15px}.task-list button>span small,.task-list button>em{font-size:13px}
+.snapshot-copy{font-size:14px;line-height:1.8}.skill-list>div>div:first-child{font-size:14px}.skill-list b{font-size:13px}.learn-more{font-size:14px}
+.knowledge-head p{font-size:14px;line-height:1.7}.knowledge-head>b{font-size:10px}.question-area>p:first-child{font-size:18px;line-height:1.7}
+.choice-list button{font-size:15px;padding:12px 17px}.feedback{font-size:14px;line-height:1.8}.next-card h3{font-size:19px}.next-card p{font-size:15px;line-height:1.8}.next-levels{font-size:14px}.learner-footer{font-size:12px}
+/* Lesson typography */
+.lesson-header-center span,.lesson-topline,.outline-kicker,.lesson-section-label{font-size:12px}
+.lesson-outline h2{font-size:23px}.lesson-outline>p{font-size:15px;line-height:1.75}.outline-progress>div{font-size:14px}
+.lesson-outline nav button{font-size:15px;padding:13px 10px}.outline-tip b,.outline-tip p{font-size:14px;line-height:1.7}
+.lesson-panel h1{font-size:clamp(36px,4.2vw,50px)}.lesson-intro{font-size:18px;line-height:1.85}
+.reading-card>p{font-size:20px;line-height:2}.reading-gloss b{font-size:15px}.reading-gloss span{font-size:16px;line-height:1.85}
+.lesson-checkline,.lesson-callout p{font-size:16px;line-height:1.8}.lesson-callout b{font-size:16px}
+.grammar-example strong{font-size:21px}.lesson-h3{font-size:20px}.conjugation-grid>div>b,.conjugation-grid>div>div{font-size:15px}
+.lesson-body{font-size:17px}.lesson-note{font-size:15px}.response-field label,.fill-item label{font-size:17px}
+.response-field textarea,.fill-item input{font-size:17px}.model-answer,.fill-item small{font-size:14px}.lesson-secondary{font-size:15px}
+.inline-feedback{font-size:15px}.quiz-item>b{font-size:17px;line-height:1.7}.quiz-options button{font-size:15px;padding:12px 16px}
+.score-panel p{font-size:15px;line-height:1.7}.lesson-navigation,.lesson-navigation button{font-size:14px}
+@media(max-width:680px){
+body{font-size:16px}.site-header nav{font-size:14px}.hero-lede{font-size:17px}
+.benefit-card h3{font-size:19px}.benefit-card p{font-size:15px}
+.learner-sidebar nav a{font-size:14px}.welcome h1{font-size:29px}.welcome p{font-size:15px}
+.continue-copy h2{font-size:29px}.continue-copy>p{font-size:15px}
+.card-title h3,.knowledge-head h3{font-size:19px}.task-list button>span b{font-size:14px}
+.question-area>p:first-child{font-size:16px}.choice-list button{font-size:14px}
+.lesson-panel{padding:27px 20px}.lesson-panel h1{font-size:34px;line-height:1.16}
+.lesson-intro{font-size:17px;line-height:1.8}.reading-card>p{font-size:18px;line-height:1.95}
+.reading-gloss span{font-size:14px}.lesson-checkline,.lesson-callout p{font-size:15px}.lesson-callout b{font-size:15px}
+.grammar-example strong{font-size:18px}.lesson-h3{font-size:18px}
+.conjugation-grid>div>b,.conjugation-grid>div>div{font-size:13px}
+.lesson-body{font-size:15px}.lesson-note{font-size:14px}
+.response-field label,.fill-item label{font-size:15px}.response-field textarea,.fill-item input{font-size:16px}
+.quiz-item>b{font-size:15px}.quiz-options button{font-size:14px}.lesson-navigation,.lesson-navigation button{font-size:13px}
+}
