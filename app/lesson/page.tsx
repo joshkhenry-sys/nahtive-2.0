@@ -58,7 +58,7 @@ export default function A2PastLesson() {
           <div className="lesson-section-label">01 · LEE PARA COMPRENDER</div>
           <h1>Un día en el centro</h1>
           <p className="lesson-intro">Lee el texto dos veces. Primero, busca la idea general. Después, identifica las acciones que ocurrieron y el orden en que sucedieron.</p>
-          <div className="reading-card"><div className="reading-card-top"><span>LECTURA</span><span>≈ 130 PALABRAS</span></div><p>{passage}</p><div className="reading-gloss"><b>Fíjate en estas formas:</b><span>me desperté · preparé · caminamos · visitamos · encontramos · almorzamos · pedí · comió · regresamos · llamé · vimos</span></div></div>
+          <div className="reading-card"><div className="reading-card-top"><span>LECTURA</span><span>≈ 100 PALABRAS</span></div><p>{passage}</p><div className="reading-gloss"><b>Fíjate en estas formas:</b><span>me desperté · preparé · caminamos · visitamos · encontramos · almorzamos · pedí · comió · regresamos · llamé · vimos</span></div></div>
           <label className="lesson-checkline"><input type="checkbox" checked={readDone} onChange={e => setReadDone(e.target.checked)} /> He leído el texto dos veces y puedo explicar de qué trata.</label>
           <div className="lesson-callout"><b>Estrategia</b><p>No traduzcas cada palabra. Busca quién hizo cada acción, qué hizo y cuándo ocurrió.</p></div>
         </article>}
