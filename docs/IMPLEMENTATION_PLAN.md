@@ -40,7 +40,9 @@ Connect authentication and learner data with tested RLS; migrate eligible record
 ## First-release acceptance criteria
 - Spanish is the only available course.
 - Learner can register, sign in, and resume saved progress.
-- Learner can complete a lesson through assessment.
+- Learner can complete multiple lesson archetypes with different activity sequences.
+- New vocabulary is explained in context, practised in more than one way, and recycled before or during independent use.
+- Lesson explanations teach meaning and sentence construction, not only rules or memorized phrases.
 - Feedback handles natural alternatives and explains actual errors.
 - Published lessons pass automated validation and human review.
 - Dashboard metrics come from saved learning evidence, not placeholders.
