@@ -6,9 +6,9 @@ import { useMemo, useState } from "react";
 const steps = ["Reading", "Grammar", "Comprehension", "Guided practice", "Production", "Assessment"];
 const passage = "Ayer fue un día bastante ocupado. Por la mañana, me desperté a las siete, preparé café y desayuné con mi hermana. Después, caminamos hasta el centro porque queríamos comprar un regalo para nuestra madre. Primero, visitamos una librería y encontramos un libro interesante. Luego, almorzamos en un pequeño restaurante. Yo pedí una ensalada y mi hermana comió tacos. Por la tarde, regresamos a casa y envolvimos el regalo. Más tarde, llamé a mi madre para preguntarle si estaba en casa. No le dije nada del regalo porque quería darle una sorpresa. Al final del día, vimos una película y descansamos.";
 const blanks = [
-  { prompt: "Ayer yo _____ (preparar) café.", answer: "preparé", hint: "yo · preparar" },
+  { prompt: "Ayer yo _____ (preparar) café.", answer: "preparé", hint: "I · preparar" },
   { prompt: "Nosotros _____ (caminar) hasta el centro.", answer: "caminamos", hint: "nosotros · caminar" },
-  { prompt: "Mi hermana _____ (comer) tacos.", answer: "comió", hint: "ella · comer" },
+  { prompt: "Mi hermana _____ (comer) tacos.", answer: "comió", hint: "she · comer" },
   { prompt: "Por la tarde, _____ (regresar) a casa.", answer: "regresamos", hint: "nosotros · regresar" },
 ];
 const quiz = [
@@ -40,14 +40,14 @@ export default function A2PastLesson() {
   return <main className="lesson-shell">
     <header className="lesson-header">
       <Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link>
-      <div className="lesson-header-center"><span>A2 · UNIDAD 04</span><b>Hablar del pasado</b></div>
+      <div className="lesson-header-center"><span>A2 · UNIDAD 04</span><b>Talking about the past</b></div>
       <Link className="lesson-exit" href="/dashboard">Salir de la lección ↗</Link>
     </header>
     <div className="lesson-layout">
       <aside className="lesson-outline">
-        <div className="outline-kicker">TU LECCIÓN</div>
+        <div className="outline-kicker">YOUR LESSON</div>
         <h2>Hablar del pasado</h2>
-        <p>Usa el pretérito para contar acciones terminadas.</p>
+        <p>Use the preterite to describe completed past actions.</p>
         <div className="outline-progress"><div><span>Progreso</span><b>{progress}%</b></div><i><span style={{ width: progress + "%" }} /></i></div>
         <nav>{steps.map((label, i) => <button key={label} className={step === i ? "outline-active" : step > i ? "outline-done" : ""} onClick={() => setStep(i)}><span>{step > i ? "✓" : String(i + 1).padStart(2, "0")}</span>{label}</button>)}</nav>
         <div className="outline-tip"><b>Today’s objective</b><p>By the end, you will be able to describe a simple sequence of completed past actions.</p></div>
@@ -63,7 +63,7 @@ export default function A2PastLesson() {
           <div className="lesson-callout"><b>Reading tip</b><p>Do not translate every word. Look for who performed each action, what they did, and when it happened.</p></div>
         </article>}
         {step === 1 && <article className="lesson-panel">
-          <div className="lesson-section-label">02 · OBSERVA LA ESTRUCTURA</div>
+          <div className="lesson-section-label">02 · UNDERSTAND THE STRUCTURE</div>
           <h1>The preterite: completed actions</h1>
           <p className="lesson-intro">We use the preterite to describe actions as completed events in the past. It often appears with time expressions such as <em>ayer</em>, <em>anoche</em>, <em>el lunes pasado</em> y <em>la semana pasada</em>.</p>
           <div className="grammar-example"><span>AYER</span><strong>Ayer <em>preparé</em> café y <em>desayuné</em> con mi hermana.</strong><small>Dos acciones completadas en el pasado.</small></div>
@@ -74,7 +74,7 @@ export default function A2PastLesson() {
           <p className="lesson-note">Focus first on regular endings in this lesson. The irregular forms are introduced as high-frequency verbs you should learn to recognize.</p>
         </article>}
         {step === 2 && <article className="lesson-panel">
-          <div className="lesson-section-label">03 · COMPRUEBA EL SIGNIFICADO</div>
+          <div className="lesson-section-label">03 · CHECK YOUR UNDERSTANDING</div>
           <h1>What happened in the story?</h1>
           <p className="lesson-intro">Answer in Spanish using short sentences. You do not need to copy the passage word for word.</p>
           <div className="comprehension-list">
