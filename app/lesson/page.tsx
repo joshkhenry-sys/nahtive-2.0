@@ -7,15 +7,15 @@ const steps = ["Reading", "Grammar", "Comprehension", "Guided practice", "Produc
 const passage = "Ayer fue un día bastante ocupado. Por la mañana, me desperté a las siete, preparé café y desayuné con mi hermana. Después, caminamos hasta el centro porque queríamos comprar un regalo para nuestra madre. Primero, visitamos una librería y encontramos un libro interesante. Luego, almorzamos en un pequeño restaurante. Yo pedí una ensalada y mi hermana comió tacos. Por la tarde, regresamos a casa y envolvimos el regalo. Más tarde, llamé a mi madre para preguntarle si estaba en casa. No le dije nada del regalo porque quería darle una sorpresa. Al final del día, vimos una película y descansamos.";
 const blanks = [
   { prompt: "Ayer yo _____ (preparar) café.", answer: "preparé", hint: "I · preparar" },
-  { prompt: "Nosotros _____ (caminar) hasta el centro.", answer: "caminamos", hint: "nosotros · caminar" },
+  { prompt: "Nosotros _____ (caminar) hasta el centro.", answer: "caminamos", hint: "we · caminar" },
   { prompt: "Mi hermana _____ (comer) tacos.", answer: "comió", hint: "she · comer" },
-  { prompt: "Por la tarde, _____ (regresar) a casa.", answer: "regresamos", hint: "nosotros · regresar" },
+  { prompt: "Por la tarde, _____ (regresar) a casa.", answer: "regresamos", hint: "we · regresar" },
 ];
 const quiz = [
   { q: "Last Saturday, we _____ at home.", options: ["estudiamos", "estudiábamos", "estudiar"], answer: "estudiamos", why: "“El sábado pasado” refers to a completed time in the past. “Estudiamos” is the nosotros preterite form." },
   { q: "Yesterday, Marta _____ a movie.", options: ["miró", "mira", "miraba"], answer: "miró", why: "“Miró” is the preterite form for ella/él/usted." },
   { q: "What is the yo form of “beber” in the preterite?", options: ["bebí", "bebió", "bebía"], answer: "bebí", why: "Regular -er and -ir verbs use -í for the yo form in the preterite." },
-  { q: "Completa: Anoche, mis amigos _____ tarde.", options: ["llegaron", "llegamos", "llegan"], answer: "llegaron", why: "“Mis amigos” = ellos; llegar → llegaron." },
+  { q: "Complete: Last night, my friends _____ late.", options: ["llegaron", "llegamos", "llegan"], answer: "llegaron", why: "“Mis amigos” means “my friends” (they), so use the ellos form: llegaron." },
   { q: "Which sentence describes an action completed yesterday?", options: ["Normalmente cocino.", "Ayer cociné.", "Estoy cocinando."], answer: "Ayer cociné.", why: "The preterite presents the action as a completed event in the past." },
 ];
 
@@ -40,7 +40,7 @@ export default function A2PastLesson() {
   return <main className="lesson-shell">
     <header className="lesson-header">
       <Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link>
-      <div className="lesson-header-center"><span>A2 · UNIDAD 04</span><b>Talking about the past</b></div>
+      <div className="lesson-header-center"><span>A2 · UNIT 04</span><b>Talking about the past</b></div>
       <Link className="lesson-exit" href="/dashboard">Exit lesson ↗</Link>
     </header>
     <div className="lesson-layout">
@@ -105,7 +105,7 @@ export default function A2PastLesson() {
           {quizSubmitted&&<div className="score-panel"><span>YOUR RESULT</span><strong>{quizScore}/5</strong><p>{quizScore===5?"Excellent. You have demonstrated strong control of this learning objective.":quizScore>=3?"Good work. Review the explanations and practise the forms you found difficult.":"Review the explanation and repeat the practice before moving on."}</p></div>}
           <button className="lesson-primary" onClick={()=>setQuizSubmitted(true)} disabled={quizAnswers.some(a=>!a)}>Submit assessment →</button>
         </article>}
-        <footer className="lesson-navigation"><button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}>← Anterior</button><span>{step+1} de {steps.length}</span>{step<5?<button className="lesson-next" onClick={()=>setStep(s=>Math.min(5,s+1))}>Siguiente: {steps[step+1]} →</button>:<Link className="lesson-next" href="/dashboard">Volver al panel →</Link>}</footer>
+        <footer className="lesson-navigation"><button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}>← Previous</button><span>{step+1} of {steps.length}</span>{step<5?<button className="lesson-next" onClick={()=>setStep(s=>Math.min(5,s+1))}>Next: {steps[step+1]} →</button>:<Link className="lesson-next" href="/dashboard">Back to dashboard →</Link>}</footer>
       </section>
     </div>
   </main>;
