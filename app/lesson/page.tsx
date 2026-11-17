@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-const steps = ["Lectura", "Gramática", "Comprensión", "Práctica", "Producción", "Evaluación"];
+const steps = ["Reading", "Grammar", "Comprehension", "Guided practice", "Production", "Assessment"];
 const passage = "Ayer fue un día bastante ocupado. Por la mañana, me desperté a las siete, preparé café y desayuné con mi hermana. Después, caminamos hasta el centro porque queríamos comprar un regalo para nuestra madre. Primero, visitamos una librería y encontramos un libro interesante. Luego, almorzamos en un pequeño restaurante. Yo pedí una ensalada y mi hermana comió tacos. Por la tarde, regresamos a casa y envolvimos el regalo. Más tarde, llamé a mi madre para preguntarle si estaba en casa. No le dije nada del regalo porque quería darle una sorpresa. Al final del día, vimos una película y descansamos.";
 const blanks = [
   { prompt: "Ayer yo _____ (preparar) café.", answer: "preparé", hint: "yo · preparar" },
@@ -78,31 +78,31 @@ export default function A2PastLesson() {
           <h1>¿Qué pasó en la historia?</h1>
           <p className="lesson-intro">Responde en español con frases breves. No necesitas copiar el texto palabra por palabra.</p>
           <div className="comprehension-list">
-            {[["¿Por qué caminaron hasta el centro?","Porque querían comprar un regalo para su madre."],["¿Qué pidió la persona que narra?","Pidió una ensalada."],["¿Qué hizo después de regresar a casa?","Envolvió el regalo y después llamó a su madre."]].map(([q,a],i)=><div className="response-field" key={q}><label>{i+1}. {q}</label><textarea value={comprehension[i]} onChange={e=>setComprehension(old=>old.map((v,j)=>i===j?e.target.value:v))} placeholder="Escribe tu respuesta en español..." rows={2}/>{comprehensionChecked&&<small className="model-answer">Respuesta posible: {a}</small>}</div>)}
+            {[["Why did they walk downtown?","Porque querían comprar un regalo para su madre."],["What did the narrator order?","Pidió una ensalada."],["What did the narrator do after returning home?","Envolvió el regalo y después llamó a su madre."]].map(([q,a],i)=><div className="response-field" key={q}><label>{i+1}. {q}</label><textarea value={comprehension[i]} onChange={e=>setComprehension(old=>old.map((v,j)=>i===j?e.target.value:v))} placeholder="Write your answer in Spanish..." rows={2}/>{comprehensionChecked&&<small className="model-answer">Respuesta posible: {a}</small>}</div>)}
           </div>
-          <button className="lesson-secondary" onClick={()=>setComprehensionChecked(v=>!v)}>{comprehensionChecked?"Ocultar respuestas posibles":"Ver respuestas posibles"}</button>
+          <button className="lesson-secondary" onClick={()=>setComprehensionChecked(v=>!v)}>{comprehensionChecked?"Hide sample answers":"View sample answers"}</button>
         </article>}
         {step === 3 && <article className="lesson-panel">
           <div className="lesson-section-label">04 · PRÁCTICA GUIADA</div>
           <h1>Elige la forma correcta</h1>
           <p className="lesson-intro">Completa cada frase con el pretérito del verbo entre paréntesis. Presta atención al sujeto.</p>
-          <div className="fill-list">{blanks.map((item,i)=><div className="fill-item" key={item.prompt}><label>{i+1}. {item.prompt}</label><input value={blankAnswers[i]} onChange={e=>{updateBlank(i,e.target.value);setBlanksChecked(false);}} placeholder="Escribe la forma..." /><small>{item.hint}</small>{blanksChecked&&<div className={blankAnswers[i].trim().toLowerCase()===item.answer?"inline-feedback correct":"inline-feedback incorrect"}>{blankAnswers[i].trim().toLowerCase()===item.answer?"¡Correcto!":"Respuesta: "+item.answer}</div>}</div>)}</div>
-          <button className="lesson-secondary" onClick={()=>setShowHints(v=>!v)}>{showHints?"Ocultar pista":"Necesito una pista"}</button>{showHints&&<div className="lesson-callout"><b>Pista</b><p>-AR: é, aste, ó, amos, aron. -ER/-IR: í, iste, ió, imos, ieron.</p></div>}
+          <div className="fill-list">{blanks.map((item,i)=><div className="fill-item" key={item.prompt}><label>{i+1}. {item.prompt}</label><input value={blankAnswers[i]} onChange={e=>{updateBlank(i,e.target.value);setBlanksChecked(false);}} placeholder="Enter the verb form..." /><small>{item.hint}</small>{blanksChecked&&<div className={blankAnswers[i].trim().toLowerCase()===item.answer?"inline-feedback correct":"inline-feedback incorrect"}>{blankAnswers[i].trim().toLowerCase()===item.answer?"Correct!":"Answer: "+item.answer}</div>}</div>)}</div>
+          <button className="lesson-secondary" onClick={()=>setShowHints(v=>!v)}>{showHints?"Hide hint":"Show me a hint"}</button>{showHints&&<div className="lesson-callout"><b>Pista</b><p>-AR: é, aste, ó, amos, aron. -ER/-IR: í, iste, ió, imos, ieron.</p></div>}
           <button className="lesson-primary" onClick={()=>setBlanksChecked(true)}>Comprobar respuestas →</button>
         </article>}
         {step === 4 && <article className="lesson-panel">
           <div className="lesson-section-label">05 · PRODUCCIÓN INDEPENDIENTE</div>
           <h1>Cuenta algo que hiciste</h1>
           <p className="lesson-intro">Ahora usa la estructura para hablar de tu propia vida. Escribe frases completas; intenta conectar las acciones con <em>primero</em>, <em>después</em>, <em>luego</em> y <em>al final</em>.</p>
-          <div className="production-prompts">{["¿Qué hiciste ayer por la mañana?","¿Adónde fuiste o qué hiciste después?","¿Cómo terminó tu día?"].map((q,i)=><div className="response-field" key={q}><label>{i+1}. {q}</label><textarea value={responses[i]} onChange={e=>updateResponse(i,e.target.value)} rows={3} placeholder="Ayer por la mañana..."/></div>)}</div>
+          <div className="production-prompts">{["What did you do yesterday morning?","Where did you go, or what did you do next?","How did your day end?"].map((q,i)=><div className="response-field" key={q}><label>{i+1}. {q}</label><textarea value={responses[i]} onChange={e=>updateResponse(i,e.target.value)} rows={3} placeholder="Ayer por la mañana..."/></div>)}</div>
           <div className="lesson-callout"><b>Revisa tu texto</b><p>¿Usaste el pretérito para las acciones terminadas? ¿Concuerdan los verbos con el sujeto? ¿El orden de las ideas está claro?</p></div>
         </article>}
         {step === 5 && <article className="lesson-panel">
           <div className="lesson-section-label">06 · EVALUACIÓN</div>
           <h1>Comprueba lo que aprendiste</h1>
           <p className="lesson-intro">Cinco preguntas para comprobar si puedes reconocer y usar el pretérito regular en contexto.</p>
-          <div className="quiz-list">{quiz.map((item,i)=><div className="quiz-item" key={item.q}><b>{i+1}. {item.q}</b><div className="quiz-options">{item.options.map(option=><button key={option} className={quizAnswers[i]===option?"quiz-selected":""} onClick={()=>updateQuiz(i,option)}>{option}</button>)}</div>{quizSubmitted&&<div className={quizAnswers[i]===item.answer?"inline-feedback correct":"inline-feedback incorrect"}>{quizAnswers[i]===item.answer?"Correcto. ":"Revisa esto. "}{item.why}</div>}</div>)}</div>
-          {quizSubmitted&&<div className="score-panel"><span>RESULTADO</span><strong>{quizScore}/5</strong><p>{quizScore===5?"Excelente. Has demostrado un buen control de este objetivo.":quizScore>=3?"Buen trabajo. Revisa las explicaciones y practica las formas que te costaron.":"Vuelve a la explicación y repite la práctica antes de avanzar."}</p></div>}
+          <div className="quiz-list">{quiz.map((item,i)=><div className="quiz-item" key={item.q}><b>{i+1}. {item.q}</b><div className="quiz-options">{item.options.map(option=><button key={option} className={quizAnswers[i]===option?"quiz-selected":""} onClick={()=>updateQuiz(i,option)}>{option}</button>)}</div>{quizSubmitted&&<div className={quizAnswers[i]===item.answer?"inline-feedback correct":"inline-feedback incorrect"}>{quizAnswers[i]===item.answer?"Correct. ":"Review this. "}{item.why}</div>}</div>)}</div>
+          {quizSubmitted&&<div className="score-panel"><span>RESULTADO</span><strong>{quizScore}/5</strong><p>{quizScore===5?"Excellent. You have demonstrated strong control of this learning objective.":quizScore>=3?"Good work. Review the explanations and practise the forms you found difficult.":"Review the explanation and repeat the practice before moving on."}</p></div>}
           <button className="lesson-primary" onClick={()=>setQuizSubmitted(true)} disabled={quizAnswers.some(a=>!a)}>Calificar evaluación →</button>
         </article>}
         <footer className="lesson-navigation"><button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}>← Anterior</button><span>{step+1} de {steps.length}</span>{step<5?<button className="lesson-next" onClick={()=>setStep(s=>Math.min(5,s+1))}>Siguiente: {steps[step+1]} →</button>:<Link className="lesson-next" href="/dashboard">Volver al panel →</Link>}</footer>
