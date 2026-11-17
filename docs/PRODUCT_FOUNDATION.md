@@ -27,7 +27,7 @@ Nahtive is a structured Spanish-learning website that helps learners move from u
 - Targeted support must not silently lower the lesson's intended level.
 
 ## Lesson standard
-A lesson has a measurable objective, target vocabulary and grammar, contextual reading/dialogue, comprehension, explanation, guided practice, independent production, assessment rubric, feedback, and a review recommendation. Activities must serve the stated objective.
+Lessons are not forced into one repeated template. Each uses an objective-led design with varied lesson archetypes, contextual vocabulary introduction and recycling, clear explanations, meaningful practice, independent transfer, explanatory feedback, and an appropriate assessment. See `docs/LESSON_DESIGN_SYSTEM.md`.
 
 ## Feedback standard
 Identify learner intent; distinguish grammar, spelling, accent, register, and regional variation; accept natural alternatives; correct the specific issue; explain it plainly; and provide one focused opportunity to apply the correction.
