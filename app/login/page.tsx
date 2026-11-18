@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signIn } from "@/app/auth/actions";
+import { signIn, signInWithGoogle } from "@/app/auth/actions";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string; message?: string }> }) {
   const params = await searchParams;
@@ -11,6 +11,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <p>Sign in to continue learning Spanish.</p>
         {params.message && <p className="auth-message" role="status">{params.message}</p>}
         {params.error && <p className="auth-error" role="alert">{params.error}</p>}
+        <form action={signInWithGoogle} className="auth-form"><button type="submit">Continue with Google</button></form>
+        <p className="auth-switch">or sign in with email</p>
         <form className="auth-form" action={signIn}>
           <label>Email address<input type="email" name="email" autoComplete="email" required /></label>
           <label>Password<input type="password" name="password" autoComplete="current-password" required /></label>
