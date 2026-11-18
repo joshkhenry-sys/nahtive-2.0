@@ -9,6 +9,20 @@ function authUrl(path: string, value: string) {
   return `${path}?${value.startsWith("message:") ? "message" : "error"}=${encodeURIComponent(value.replace(/^(message:)/, ""))}`;
 }
 
+export async function signInWithGoogle() {
+  const requestHeaders = await headers();
+  const origin = requestHeaders.get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: `${origin}/auth/callback?next=/dashboard` },
+  });
+
+  if (error) redirect(authUrl("/login", error.message));
+  if (data.url) redirect(data.url);
+  redirect(authUrl("/login", "Unable to start Google sign-in."));
+}
+
 export async function signIn(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
