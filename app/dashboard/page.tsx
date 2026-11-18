@@ -1,25 +1,76 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
 import { signOut } from "@/app/auth/actions";
 
-const lessonSteps = ["Read the passage out loud twice", "Review the preterite in context", "Build five original sentences", "Complete the knowledge check"];
-
 export default function Dashboard() {
-  const [done,setDone] = useState([true,false,false,false]);
-  const [answer,setAnswer] = useState("");
-  const [checked,setChecked] = useState(false);
-  const count = done.filter(Boolean).length;
   return <main className="learner-app">
-    <aside className="learner-sidebar"><Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link><div className="side-label">YOUR LEARNING</div><nav><a className="side-active" href="#overview">⌂ &nbsp; Overview</a><a href="#course-plan">▤ &nbsp; My Spanish course</a><a href="#today">◎ &nbsp; Practice</a><a href="#review">↻ &nbsp; Review</a><a href="#progress">▥ &nbsp; Progress</a></nav><div className="sidebar-bottom"><div className="help-card"><b>Need a hand?</b><p>Your learning guide is here to help you stay on track.</p><a href="mailto:hello@nahtive.com">Get in touch ↗</a></div><Link href="/">← Back to Nahtive</Link></div></aside>
-    <div className="learner-main"><header className="learner-topbar"><span>My Spanish <i>/</i> Overview <b>DEMO CONTENT</b></span><span className="learner-profile">Spanish learner <i>S</i></span><form action={signOut}><button className="logout-link" type="submit">Sign out</button></form></header>
-      <div className="learner-content" id="overview"><div className="welcome"><div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Hello! <span>Ready to keep going?</span></h1><p>Small, consistent steps add up. Here’s your next move.</p></div><div className="level-badge"><small>YOUR LEVEL</small><b>A2</b><span>Elementary</span></div></div>
-        <section className="continue-card"><div className="continue-copy"><small>PICK UP WHERE YOU LEFT OFF</small><div className="unit-label">UNIT 04 &nbsp;·&nbsp; LESSON 02</div><h2>Talking about<br/>the past</h2><p>Learn to describe completed actions and talk about what you did yesterday.</p><div className="lesson-meta">◷ 25 min &nbsp;&nbsp; · &nbsp;&nbsp; Grammar · Speaking</div><Link className="button button-primary" href="/lesson">Continue lesson <span>→</span></Link></div><div className="continue-art"><div className="spanish-card"><small>SPANISH IN CONTEXT</small><strong>¿Qué hiciste<br/>ayer?</strong><em>What did you do yesterday?</em><hr/><div><span>comer</span><b>comí</b><small>I ate</small></div><div><span>estudiar</span><b>estudié</b><small>I studied</small></div></div><b className="art-star">✳</b></div></section>
-        <div className="learner-grid"><section className="learner-card" id="today"><div className="card-title"><div><small>YOUR NEXT STEPS</small><h3>Today’s lesson</h3></div><span>25 MIN</span></div><div className="task-progress"><div><span>{count} of 4 steps complete</span><b>{Math.round(count/4*100)}%</b></div><div className="progress-line"><i style={{width:(count/4*100)+"%"}}/></div></div><div className="task-list">{lessonSteps.map((step,i)=><button className={done[i]?"task-done":""} key={step} onClick={()=>setDone(old=>old.map((v,j)=>i===j?!v:v))}><i>{done[i]?"✓":"0"+(i+1)}</i><span><b>{["Read","Understand","Practice","Recall"][i]}</b><small>{step}</small></span><em>{["5","7","8","5"][i]} min</em></button>)}</div></section>
-          <section className="learner-card" id="progress"><div className="card-title"><div><small>YOUR DEVELOPMENT</small><h3>Skill snapshot</h3></div><b className="snapshot-arrow">↗</b></div><p className="snapshot-copy">A quick view of the skills you’re building. Sample data for this preview.</p><div className="skill-list">{[["Reading",72],["Grammar",58],["Vocabulary",64],["Sentence building",46]].map(([label,value])=><div key={label}><div><span>{label}</span><b>{value}%</b></div><div className="skill-line"><i style={{width:value+"%"}}/></div></div>)}</div><a className="learn-more" href="#course-plan">View learning plan ↗</a></section></div>
-        <section className="learner-card knowledge-card" id="review"><div className="knowledge-head"><div><small>QUICK KNOWLEDGE CHECK</small><h3>Put it into practice</h3><p>Choose the correct form to complete the sentence.</p></div><b>PRETERITE · A2</b></div><div className="question-area"><p>Ayer, yo _____ una película con mi hermana.</p><div className="choice-list">{["veo","vi","veía"].map(option=><button key={option} className={(answer===option?"choice-selected ":"")+(checked&&option==="vi"?"choice-correct ":"")+(checked&&answer===option&&option!=="vi"?"choice-wrong":"")} onClick={()=>{setAnswer(option);setChecked(false);}}>{option}</button>)}</div>{checked&&<p className={answer==="vi"?"feedback good":"feedback bad"}>{answer==="vi"?"Correct. “Ayer” places the completed action in the past, so “vi” is the preterite form.":"Not quite. The sentence describes one completed action yesterday. The preterite form of “ver” is “vi”."}</p>}<button className="button button-primary check-button" disabled={!answer} onClick={()=>setChecked(true)}>Check answer <span>→</span></button></div></section>
-        <section className="next-card" id="course-plan"><div><small>COMING UP</small><h3>Keep building your Spanish.</h3><p>Your course will guide you through grammar, reading, vocabulary, and real communication—one clear step at a time.</p></div><div className="next-levels"><b>A2</b><i/><span>B1</span><i/><span>B2</span></div></section>
-        <footer className="learner-footer"><span>Nahtive 2.0 · Learning with intention.</span><span>Preview build · Your progress isn’t saved yet.</span></footer>
+    <aside className="learner-sidebar">
+      <Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link>
+      <div className="side-label">YOUR LEARNING</div>
+      <nav>
+        <a className="side-active" href="#overview">⌂ &nbsp; Overview</a>
+        <a href="#course-plan">▤ &nbsp; My Spanish course</a>
+        <a href="#available-lessons">◎ &nbsp; Lessons</a>
+      </nav>
+      <div className="sidebar-bottom">
+        <div className="help-card"><b>Need a hand?</b><p>Your learning guide is here to help you stay on track.</p><a href="mailto:hello@nahtive.com">Get in touch ↗</a></div>
+        <Link href="/">← Back to Nahtive</Link>
+      </div>
+    </aside>
+    <div className="learner-main">
+      <header className="learner-topbar">
+        <span>My Spanish <i>/</i> Course</span>
+        <span className="learner-profile">Spanish learner <i>S</i></span>
+        <form action={signOut}><button className="logout-link" type="submit">Sign out</button></form>
+      </header>
+      <div className="learner-content" id="overview">
+        <div className="welcome">
+          <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome to Spanish. <span>Let's get to work.</span></h1><p>Work through complete lessons, practice actively, and check what you have learned.</p></div>
+          <div className="level-badge"><small>LESSON LEVEL</small><b>A2</b><span>Elementary</span></div>
+        </div>
+        <section className="continue-card" id="available-lessons">
+          <div className="continue-copy">
+            <small>AVAILABLE TO TAKE NOW</small>
+            <div className="unit-label">A2 · UNIT 04 · LESSON 01</div>
+            <h2>Hablar del<br/>pasado</h2>
+            <p>Learn to describe completed past actions through a Spanish reading, grammar instruction, comprehension, guided practice, independent writing, and a five-question assessment.</p>
+            <div className="lesson-meta">◷ 25–30 min &nbsp;&nbsp; · &nbsp;&nbsp; Reading · Grammar · Writing · Assessment</div>
+            <Link className="button button-primary" href="/lesson">Start actual lesson <span>→</span></Link>
+          </div>
+          <div className="continue-art">
+            <div className="spanish-card"><small>SPANISH IN CONTEXT</small><strong>¿Qué hiciste<br/>ayer?</strong><em>What did you do yesterday?</em><hr/><div><span>comer</span><b>comí</b><small>I ate</small></div><div><span>estudiar</span><b>estudié</b><small>I studied</small></div></div>
+            <b className="art-star">✳</b>
+          </div>
+        </section>
+        <div className="learner-grid" id="course-plan">
+          <section className="learner-card">
+            <div className="card-title"><div><small>INSIDE THIS LESSON</small><h3>What you'll actually do</h3></div><span>6 PARTS</span></div>
+            <div className="task-list">
+              {[
+                ["01","Read","A contextual Spanish passage about a day downtown.","5 min"],
+                ["02","Understand","Learn regular preterite endings and common irregular verbs.","7 min"],
+                ["03","Comprehend","Answer questions about details in the reading.","5 min"],
+                ["04","Practice","Complete four verb-form exercises with feedback.","5 min"],
+                ["05","Produce","Write about what you did yesterday.","5 min"],
+                ["06","Assess","Complete a five-question knowledge check with explanations.","5 min"]
+              ].map(([number,title,description,time])=><div className="task-row" key={number}><i>{number}</i><span><b>{title}</b><small>{description}</small></span><em>{time}</em></div>)}
+            </div>
+          </section>
+          <section className="learner-card">
+            <div className="card-title"><div><small>COURSE CONTENT</small><h3>Spanish learning path</h3></div></div>
+            <p className="snapshot-copy">The course will progress from A2 toward B1 and B2. Only lessons that are implemented and ready to take will appear as available.</p>
+            <div className="skill-list">
+              <div><div><span>Available now</span><b>1 lesson</b></div><div className="skill-line"><i style={{width:"12%"}}/></div></div>
+              <div><div><span>Next</span><b>A2 · Past narration</b></div><p className="snapshot-copy">Additional lessons will be added as complete learning experiences, not placeholder cards.</p></div>
+            </div>
+            <Link className="learn-more" href="/lesson">Open available lesson ↗</Link>
+          </section>
+        </div>
+        <section className="next-card">
+          <div><small>HONEST PROGRESS TRACKING</small><h3>Your work comes first.</h3><p>This lesson currently runs as an interactive test. Answers and progress are not yet saved to your account between visits. We are not showing made-up skill scores or completion statistics.</p></div>
+          <div className="next-levels"><b>A2</b><i/><span>B1</span><i/><span>B2</span></div>
+        </section>
+        <footer className="learner-footer"><span>Nahtive 2.0 · Spanish course</span><span>Interactive lesson test · Progress persistence coming next.</span></footer>
       </div>
     </div>
   </main>;
