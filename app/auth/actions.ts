@@ -4,12 +4,14 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ensureSpanishLearner } from "@/lib/supabase/learner";
 
+const SITE_URL = "https://nahtive-20.vercel.app";
+
 function authUrl(path: string, value: string) {
   return `${path}?${value.startsWith("message:") ? "message" : "error"}=${encodeURIComponent(value.replace(/^(message:)/, ""))}`;
 }
 
 export async function signInWithGoogle() {
-  const origin = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://nahtive-20.vercel.app").replace(/\/+$/, "");
+  const origin = SITE_URL;
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
