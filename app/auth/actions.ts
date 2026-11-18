@@ -1,6 +1,5 @@
 "use server";
 
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ensureSpanishLearner } from "@/lib/supabase/learner";
@@ -10,8 +9,7 @@ function authUrl(path: string, value: string) {
 }
 
 export async function signInWithGoogle() {
-  const requestHeaders = await headers();
-  const origin = requestHeaders.get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const origin = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://nahtive-20.vercel.app").replace(/\/+$/, "");
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -42,8 +40,7 @@ export async function signUp(formData: FormData) {
   const password = String(formData.get("password") ?? "");
   if (!email || password.length < 8) redirect(authUrl("/signup", "Use a valid email and a password with at least 8 characters."));
 
-  const requestHeaders = await headers();
-  const origin = requestHeaders.get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const origin = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://nahtive-20.vercel.app").replace(/\/+$/, "");
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
