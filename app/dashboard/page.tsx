@@ -53,7 +53,7 @@ export default function Dashboard() {
                 ["04","Practice","Complete four verb-form exercises with feedback.","5 min"],
                 ["05","Produce","Write about what you did yesterday.","5 min"],
                 ["06","Assess","Complete a five-question knowledge check with explanations.","5 min"]
-              ].map(([number,title,description,time])=><div className="task-row" key={number}><i>{number}</i><span><b>{title}</b><small>{description}</small></span><em>{time}</em></div>)}
+              ].map(([number,title,description,time])=><button type="button" disabled key={number}><i>{number}</i><span><b>{title}</b><small>{description}</small></span><em>{time}</em></button>)}
             </div>
           </section>
           <section className="learner-card">
