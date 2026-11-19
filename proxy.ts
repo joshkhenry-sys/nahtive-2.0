@@ -21,20 +21,9 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  const { data } = await supabase.auth.getClaims();
-  // Keep learner accounts required for the dashboard, but allow visitors to preview lessons.
-  const isProtected = request.nextUrl.pathname === "/dashboard" ||
-    request.nextUrl.pathname.startsWith("/dashboard/");
-
-  if (!data?.claims && isProtected) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("next", request.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  if (data?.claims && ["/login", "/signup"].includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // Nahtive is in public testing mode: visitors can open the dashboard and lessons
+  // without creating an account. Authentication remains available but is not required.
+  await supabase.auth.getClaims();
 
   return response;
 }
