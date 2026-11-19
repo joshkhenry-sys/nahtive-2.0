@@ -226,3 +226,19 @@ body{font-size:16px}.site-header nav{font-size:14px}.hero-lede{font-size:17px}
 .speak-console h2{font-size:19px}.speak-controls{flex-wrap:wrap}
 .dashboard-speak-link{display:block;margin:14px 0 0}
 }
+
+/* CEFR course map */
+.cefr-path{background:#fff;border:1px solid #e7e9f1;border-radius:15px;padding:24px;margin:0 0 20px}
+.cefr-path-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:17px}
+.cefr-path-heading small{font-size:10px;letter-spacing:1.3px;font-weight:800;color:#7770d2}
+.cefr-path-heading h2{font:800 22px Manrope;margin:7px 0;color:#252a43}
+.cefr-path-heading p{font-size:13px;line-height:1.7;color:#7c8498;margin:0;max-width:560px}
+.cefr-path-heading>a{white-space:nowrap;color:#625bd0;font-size:12px;font-weight:800;text-decoration:none}
+.cefr-level-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
+.cefr-level-grid>div{display:grid;align-content:start;gap:6px;background:#fafaff;border:1px solid #ececf5;border-radius:10px;padding:12px 10px;min-height:125px}
+.cefr-level-grid b{font:800 19px Manrope;color:#665ed1}
+.cefr-level-grid strong{font-size:11px;color:#303650}
+.cefr-level-grid span{font-size:10px;line-height:1.55;color:#80889d}
+.cefr-path-note{font-size:11px;line-height:1.65;color:#8b92a5;margin:14px 0 0}
+@media(max-width:900px){.cefr-level-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.cefr-path{padding:17px}.cefr-path-heading{display:block}.cefr-path-heading>a{display:inline-block;margin-top:12px}.cefr-level-grid{grid-template-columns:repeat(2,1fr)}.cefr-level-grid>div{min-height:115px}}
