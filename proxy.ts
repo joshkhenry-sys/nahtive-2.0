@@ -22,9 +22,9 @@ export async function proxy(request: NextRequest) {
   });
 
   const { data } = await supabase.auth.getClaims();
-  const isProtected = ["/dashboard", "/lesson"].some((path) =>
-    request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(path + "/")
-  );
+  // Keep learner accounts required for the dashboard, but allow visitors to preview lessons.
+  const isProtected = request.nextUrl.pathname === "/dashboard" ||
+    request.nextUrl.pathname.startsWith("/dashboard/");
 
   if (!data?.claims && isProtected) {
     const loginUrl = new URL("/login", request.url);
