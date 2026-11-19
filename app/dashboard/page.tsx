@@ -29,6 +29,18 @@ export default function Dashboard() {
           <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome to Spanish. <span>Let's get to work.</span></h1><p>Work through complete lessons, practice actively, and check what you have learned.</p></div>
           <div className="level-badge"><small>COURSE LEVELS</small><b>A1–C2</b><span>All CEFR levels</span></div>
         </div>
+        <section className="cefr-path" aria-label="Spanish course levels">
+          <div className="cefr-path-heading"><div><small>THE COMPLETE SPANISH PATH</small><h2>One course. Six levels.</h2><p>Build from first phrases to precise, natural Spanish. Your starting point should match your current ability—not default to A2.</p></div><Link href="/speak">Practise speaking at any level ↗</Link></div>
+          <div className="cefr-level-grid">
+            <div><b>A1</b><strong>Beginner</strong><span>Build essential vocabulary, introductions, simple questions, and everyday phrases.</span></div>
+            <div><b>A2</b><strong>Elementary</strong><span>Handle familiar situations, describe routines, and talk about past and future plans.</span></div>
+            <div><b>B1</b><strong>Intermediate</strong><span>Tell stories, explain opinions, manage travel, and keep conversations moving.</span></div>
+            <div><b>B2</b><strong>Upper intermediate</strong><span>Speak with greater fluency, use varied structures, and discuss more complex topics.</span></div>
+            <div><b>C1</b><strong>Advanced</strong><span>Express nuanced ideas, adapt register, and understand idiomatic language.</span></div>
+            <div><b>C2</b><strong>Proficient</strong><span>Refine precision, style, subtle meaning, and near-native comprehension.</span></div>
+          </div>
+          <p className="cefr-path-note">Speaking practice supports all six levels now. The fully authored lesson library is being expanded level by level; the A2 past-tense lesson below is the current complete lesson.</p>
+        </section>
         <section className="continue-card" id="available-lessons">
           <div className="continue-copy">
             <small>AVAILABLE TO TAKE NOW</small>
