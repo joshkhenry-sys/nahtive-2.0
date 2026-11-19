@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Mode = "repeat" | "guided" | "free";
 type Level = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
@@ -50,7 +50,7 @@ function base64ToBytes(value: string) {
 }
 
 export default function SpeakPage() {
-  const [level, setLevel] = useState<Level>("A2");
+  const [level, setLevel] = useState<Level | "">("");
   const [mode, setMode] = useState<Mode>("guided");
   const [status, setStatus] = useState<"idle" | "connecting" | "live">("idle");
   const [error, setError] = useState("");
@@ -85,6 +85,10 @@ export default function SpeakPage() {
   }
 
   async function startSession() {
+    if (!level) {
+      setError("Choose your current Spanish level before starting a voice session.");
+      return;
+    }
     setError("");
     setTranscript([]);
     setStatus("connecting");
@@ -202,6 +206,15 @@ export default function SpeakPage() {
     }
   }
 
+  useEffect(() => () => {
+    processorRef.current?.disconnect();
+    sourceRef.current?.disconnect();
+    streamRef.current?.getTracks().forEach(track => track.stop());
+    socketRef.current?.close();
+    void inputContextRef.current?.close().catch(() => {});
+    void outputContextRef.current?.close().catch(() => {});
+  }, []);
+
   const activeMode = modes.find(item => item.id === mode)!;
   const levelLabels: Record<Level, string> = { A1: "Beginner", A2: "Elementary", B1: "Intermediate", B2: "Upper intermediate", C1: "Advanced", C2: "Proficient" };
 
@@ -230,13 +243,13 @@ export default function SpeakPage() {
           </div>
         </section>
         <section className="speak-console">
-          <div className="speak-console-top"><div><span className={status === "live" ? "live-dot on" : "live-dot"} />{status === "live" ? "Tutor connected" : status === "connecting" ? "Connecting to your tutor…" : "Ready when you are"}</div><span>VOICE · SPANISH</span></div>
+          <div className="speak-console-top"><div><span className={status === "live" ? "live-dot on" : "live-dot"} />{status === "live" ? "Tutor connected" : status === "connecting" ? "Connecting to your tutor…" : level ? "Ready when you are" : "Choose a level to begin"}</div><span>VOICE · SPANISH</span></div>
           <div className="speak-orb"><div className={status === "live" ? "orb-core active" : "orb-core"}><span>n</span></div></div>
-          <h2>{status === "live" ? "You're in the conversation." : status === "connecting" ? "Getting your tutor ready…" : "Your Spanish tutor is ready."}</h2>
+          <h2>{status === "live" ? "You're in the conversation." : status === "connecting" ? "Getting your tutor ready…" : level ? "Your Spanish tutor is ready." : "First, choose your level."}</h2>
           <p>{status === "live" ? "Speak naturally. You can interrupt, pause, or stop whenever you like." : activeMode.description}</p>
           {error && <div className="speak-error" role="alert">{error}</div>}
           <div className="speak-controls">
-            {status === "idle" ? <button className="speak-start" onClick={startSession}>Start speaking <span>→</span></button> : <><button className="speak-mute" onClick={() => { mutedRef.current = !mutedRef.current; setMuted(mutedRef.current); }}>{muted ? "Turn microphone on" : "Mute microphone"}</button><button className="speak-stop" onClick={stopSession}>End session</button></>}
+            {status === "idle" ? <button className="speak-start" onClick={startSession} disabled={!level}>Start speaking <span>→</span></button> : <><button className="speak-mute" onClick={() => { mutedRef.current = !mutedRef.current; setMuted(mutedRef.current); }}>{muted ? "Turn microphone on" : "Mute microphone"}</button><button className="speak-stop" onClick={stopSession}>End session</button></>}
           </div>
           <small className="speak-mic-note">Your browser will ask for microphone permission. Use headphones for the best experience.</small>
         </section>
