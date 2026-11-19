@@ -56,6 +56,7 @@ export default function SpeakPage() {
   const [error, setError] = useState("");
   const [transcript, setTranscript] = useState<{ who: string; text: string }[]>([]);
   const [muted, setMuted] = useState(false);
+  const mutedRef = useRef(false);
   const socketRef = useRef<WebSocket | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const inputContextRef = useRef<AudioContext | null>(null);
@@ -79,6 +80,7 @@ export default function SpeakPage() {
     socketRef.current = null;
     nextPlayTimeRef.current = 0;
     setStatus("idle");
+    mutedRef.current = false;
     setMuted(false);
   }
 
@@ -134,7 +136,7 @@ export default function SpeakPage() {
               sourceRef.current = source;
               processorRef.current = processor;
               processor.onaudioprocess = audioEvent => {
-                if (muted || socket.readyState !== WebSocket.OPEN) return;
+                if (mutedRef.current || socket.readyState !== WebSocket.OPEN) return;
                 const input = audioEvent.inputBuffer.getChannelData(0);
                 const targetLength = Math.round(input.length * 16000 / context.sampleRate);
                 const resampled = new Float32Array(targetLength);
@@ -189,8 +191,10 @@ export default function SpeakPage() {
       };
       socket.onerror = () => setError("The live voice connection hit a network error. Please try again.");
       socket.onclose = event => {
-        setStatus("idle");
-        if (event.code !== 1000) setError("Google ended the voice connection. Please start a new session.");
+        if (socketRef.current === socket) {
+          stopSession();
+          if (event.code !== 1000) setError("Google ended the voice connection. Please start a new session.");
+        }
       };
     } catch (e) {
       stopSession();
@@ -232,7 +236,7 @@ export default function SpeakPage() {
           <p>{status === "live" ? "Speak naturally. You can interrupt, pause, or stop whenever you like." : activeMode.description}</p>
           {error && <div className="speak-error" role="alert">{error}</div>}
           <div className="speak-controls">
-            {status === "idle" ? <button className="speak-start" onClick={startSession}>Start speaking <span>→</span></button> : <><button className="speak-mute" onClick={() => setMuted(v => !v)}>{muted ? "Turn microphone on" : "Mute microphone"}</button><button className="speak-stop" onClick={stopSession}>End session</button></>}
+            {status === "idle" ? <button className="speak-start" onClick={startSession}>Start speaking <span>→</span></button> : <><button className="speak-mute" onClick={() => { mutedRef.current = !mutedRef.current; setMuted(mutedRef.current); }}>{muted ? "Turn microphone on" : "Mute microphone"}</button><button className="speak-stop" onClick={stopSession}>End session</button></>}
           </div>
           <small className="speak-mic-note">Your browser will ask for microphone permission. Use headphones for the best experience.</small>
         </section>
