@@ -10,6 +10,7 @@ export default function Dashboard() {
       <nav>
         <a className="side-active" href="#overview">⌂ &nbsp; Overview</a>
         <a href="#course-plan">▤ &nbsp; My Spanish course</a>
+        <a href="/speak">♫ &nbsp; Speak with AI tutor</a>
         <a href="#available-lessons">◎ &nbsp; Lessons</a>
       </nav>
       <div className="sidebar-bottom">
@@ -26,7 +27,7 @@ export default function Dashboard() {
       <div className="learner-content" id="overview">
         <div className="welcome">
           <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome to Spanish. <span>Let's get to work.</span></h1><p>Work through complete lessons, practice actively, and check what you have learned.</p></div>
-          <div className="level-badge"><small>LESSON LEVEL</small><b>A2</b><span>Elementary</span></div>
+          <div className="level-badge"><small>COURSE LEVELS</small><b>A1–C2</b><span>All CEFR levels</span></div>
         </div>
         <section className="continue-card" id="available-lessons">
           <div className="continue-copy">
@@ -36,6 +37,7 @@ export default function Dashboard() {
             <p>Learn to describe completed past actions through a Spanish reading, grammar instruction, comprehension, guided practice, independent writing, and a five-question assessment.</p>
             <div className="lesson-meta">◷ 25–30 min &nbsp;&nbsp; · &nbsp;&nbsp; Reading · Grammar · Writing · Assessment</div>
             <Link className="button button-primary" href="/lesson">Start actual lesson <span>→</span></Link>
+            <Link className="dashboard-speak-link" href="/speak">Try live Spanish speaking practice ↗</Link>
           </div>
           <div className="continue-art">
             <div className="spanish-card"><small>SPANISH IN CONTEXT</small><strong>¿Qué hiciste<br/>ayer?</strong><em>What did you do yesterday?</em><hr/><div><span>comer</span><b>comí</b><small>I ate</small></div><div><span>estudiar</span><b>estudié</b><small>I studied</small></div></div>
@@ -58,7 +60,7 @@ export default function Dashboard() {
           </section>
           <section className="learner-card">
             <div className="card-title"><div><small>COURSE CONTENT</small><h3>Spanish learning path</h3></div></div>
-            <p className="snapshot-copy">The course will progress from A2 toward B1 and B2. Only lessons that are implemented and ready to take will appear as available.</p>
+            <p className="snapshot-copy">Nahtive is being built around the full CEFR range: A1, A2, B1, B2, C1, and C2. Choose your speaking level in Speak. Only lessons that are implemented and ready to take will appear as available.</p>
             <div className="skill-list">
               <div><div><span>Available now</span><b>1 lesson</b></div><div className="skill-line"><i style={{width:"12%"}}/></div></div>
               <div><div><span>Next</span><b>A2 · Past narration</b></div><p className="snapshot-copy">Additional lessons will be added as complete learning experiences, not placeholder cards.</p></div>
@@ -68,7 +70,7 @@ export default function Dashboard() {
         </div>
         <section className="next-card">
           <div><small>HONEST PROGRESS TRACKING</small><h3>Your work comes first.</h3><p>This lesson currently runs as an interactive test. Answers and progress are not yet saved to your account between visits. We are not showing made-up skill scores or completion statistics.</p></div>
-          <div className="next-levels"><b>A2</b><i/><span>B1</span><i/><span>B2</span></div>
+          <div className="next-levels"><b>A1</b><i/><span>A2</span><i/><span>B1</span><i/><span>B2</span><i/><span>C1</span><i/><span>C2</span></div>
         </section>
         <footer className="learner-footer"><span>Nahtive 2.0 · Spanish course</span><span>Interactive lesson test · Progress persistence coming next.</span></footer>
       </div>
