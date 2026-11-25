@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   const requestedNext = searchParams.get("next") ?? "/dashboard";
+
   const next =
     requestedNext.startsWith("/") && !requestedNext.startsWith("//")
       ? requestedNext
@@ -20,32 +21,43 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = await createClient();
+
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (error) {
-      console.error("GOOGLE_AUTH_EXCHANGE_ERROR:", error.message);
+      console.error("GOOGLE_AUTH_EXCHANGE_ERROR:", error);
+
       return NextResponse.redirect(
-        new URL(`/login?error=${encodeURIComponent(error.message)}`, origin)
+        new URL(
+          `/login?error=${encodeURIComponent(error.message)}`,
+          origin
+        )
       );
     }
 
-    const { data } = await supabase.auth.getUser();
+    const { data, error: userError } = await supabase.auth.getUser();
 
-    if (data.user) {
-      await ensureSpanishLearner(supabase, data.user);
+    if (userError) {
+      throw userError;
     }
+
+    if (!data.user) {
+      throw new Error("Google sign-in succeeded, but no user was returned.");
+    }
+
+    await ensureSpanishLearner(supabase, data.user);
 
     return NextResponse.redirect(new URL(next, origin));
   } catch (error) {
     console.error("GOOGLE_AUTH_CALLBACK_ERROR:", error);
 
+    const message =
+      error && typeof error === "object" && "message" in error
+        ? String(error.message)
+        : String(error);
+
     return NextResponse.redirect(
-      new URL(
-        `/login?error=${encodeURIComponent(
-          error instanceof Error ? error.message : "Unknown callback error"
-        )}`,
-        origin
-      )
+      new URL(`/login?error=${encodeURIComponent(message)}`, origin)
     );
   }
 }
