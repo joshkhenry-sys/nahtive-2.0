@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
-import { createClient } from "@/lib/supabase/server";
 
 const benefits = [
   ["01", "Understand the structure", "Learn how Spanish sentences work so you can create your own—not just repeat memorized phrases."],
