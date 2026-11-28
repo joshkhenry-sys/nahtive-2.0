@@ -256,3 +256,6 @@ body{font-size:16px}.site-header nav{font-size:14px}.hero-lede{font-size:17px}
 .speak-settings>.speak-start{display:block;margin:18px 0 0 auto}
 .level-badge a{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;color:#665ed1;text-decoration:none}
 @media(max-width:650px){.onboarding-level{grid-template-columns:40px 1fr;padding:12px}.onboarding-level>span{font-size:10px}}
+
+.speak-settings .speak-levels{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:650px){.speak-settings .speak-levels{grid-template-columns:1fr}}
