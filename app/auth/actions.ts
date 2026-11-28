@@ -1,17 +1,25 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { ensureSpanishLearner } from "@/lib/supabase/learner";
 
 const SITE_URL = "https://nahtive-20.vercel.app";
+
+async function getRequestOrigin() {
+  const headerStore = await headers();
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const protocol = headerStore.get("x-forwarded-proto") ?? "https";
+  return host ? `${protocol}://${host}` : SITE_URL;
+}
 
 function authUrl(path: string, value: string) {
   return `${path}?${value.startsWith("message:") ? "message" : "error"}=${encodeURIComponent(value.replace(/^(message:)/, ""))}`;
 }
 
 export async function signInWithGoogle() {
-  const origin = SITE_URL;
+  const origin = await getRequestOrigin();
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
