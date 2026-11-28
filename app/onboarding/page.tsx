@@ -1,9 +1,9 @@
 import Link from "next/link";
-
-export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { saveStartingLevel } from "@/app/auth/learner-actions";
+
+export const dynamic = "force-dynamic";
 
 const levels = [
   { code: "A1", name: "Beginner", detail: "You know little or no Spanish yet." },
