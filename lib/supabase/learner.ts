@@ -37,11 +37,14 @@ export async function ensureSpanishLearner(supabase: SupabaseClient, user: User)
       !profile.display_name ||
       profile.display_name === "Spanish learner" ||
       profile.display_name === user.email?.split("@")[0];
-    const { error } = await supabase.from("profiles").update({
+    const profileUpdates = {
       ...(shouldRefreshName ? { display_name: displayName } : {}),
       ...(avatarUrl && !profile.avatar_url ? { avatar_url: avatarUrl } : {}),
-    }).eq("id", user.id);
-    if (error) throw error;
+    };
+    if (Object.keys(profileUpdates).length > 0) {
+      const { error } = await supabase.from("profiles").update(profileUpdates).eq("id", user.id);
+      if (error) throw error;
+    }
   }
 
   const { data: spanish, error: languageError } = await supabase
