@@ -257,7 +257,7 @@ export default function SpeakPage() {
           <div><small>LIVE CONVERSATION</small><h2>What you and your tutor say</h2></div>
           {transcript.length === 0 ? <p className="speak-empty">Your conversation transcript will appear here when you start speaking.</p> : transcript.map((line, index) => <div className="transcript-line" key={index}><b>{line.who}</b><p>{line.text}</p></div>)}
         </section>
-        <p className="speak-footnote">Nahtive Speak is in early testing. Voice availability and response speed depend on Google's Gemini Live service and your connection.</p>
+        <p className="speak-footnote">Nahtive Speak is in early testing. Voice availability and response speed depend on Google&apos;s Gemini Live service and your connection.</p>
       </div>
     </main>
   );
