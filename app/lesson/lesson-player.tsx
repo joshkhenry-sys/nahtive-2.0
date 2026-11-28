@@ -28,7 +28,7 @@ export default function LessonPlayer({lesson,lessons,courseTitle,level}:{lesson:
     setBusy(true);
     const form=new FormData();
     form.set("lessonId",lesson.id); form.set("answers",JSON.stringify(answers)); form.set("production",production);
-    try { const response=await submitLessonAttempt(form); setResult(response); setSubmitted(response.passed); }
+    try { const response=await submitLessonAttempt(form); setResult(response); setSubmitted(response.passed); setShowFeedback(true); }
     catch(error) { window.alert(error instanceof Error?error.message:"Unable to save this attempt."); }
     finally { setBusy(false); }
   }
