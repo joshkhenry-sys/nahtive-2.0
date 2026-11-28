@@ -1,8 +1,70 @@
-"use client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Dashboard() {
+const levels = [
+  ["A1", "Beginner", "Build essential vocabulary and first sentence patterns."],
+  ["A2", "Elementary", "Communicate in familiar situations and describe everyday events."],
+  ["B1", "Intermediate", "Narrate experiences, explain opinions, and sustain conversations."],
+  ["B2", "Upper intermediate", "Speak flexibly and discuss complex, unfamiliar topics."],
+  ["C1", "Advanced", "Use nuanced language with precision and control."],
+  ["C2", "Proficient", "Refine style, subtle meaning, and expressive range."],
+];
+
+export default async function Dashboard() {
+  const supabase = await createClient();
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) redirect("/login");
+
+  const [{ data: profile }, { data: spanish }, { data: stats }] = await Promise.all([
+    supabase.from("profiles").select("display_name").eq("id", user.id).maybeSingle(),
+    supabase.from("languages").select("id").eq("code", "es").eq("is_active", true).maybeSingle(),
+    supabase.from("learner_stats").select("total_points,current_streak,longest_streak").eq("user_id", user.id).maybeSingle(),
+  ]);
+
+  if (!spanish) redirect("/login?error=Spanish%20course%20is%20not%20available");
+
+  const { data: enrollment } = await supabase
+    .from("learner_languages")
+    .select("level,starting_level")
+    .eq("user_id", user.id)
+    .eq("language_id", spanish.id)
+    .eq("is_current", true)
+    .maybeSingle();
+
+  if (!enrollment?.starting_level) redirect("/onboarding");
+
+  const { data: course } = await supabase
+    .from("courses")
+    .select("id,title,description")
+    .eq("language_id", spanish.id)
+    .eq("level", enrollment.starting_level)
+    .maybeSingle();
+
+  let publishedLessonCount = 0;
+  if (course) {
+    const { data: units } = await supabase
+      .from("course_units")
+      .select("id")
+      .eq("course_id", course.id)
+      .eq("is_published", true);
+    if (units?.length) {
+      const { count } = await supabase
+        .from("lessons")
+        .select("id", { count: "exact", head: true })
+        .in("unit_id", units.map(unit => unit.id))
+        .eq("is_published", true);
+      publishedLessonCount = count ?? 0;
+    }
+  }
+
+  const displayName = profile?.display_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Learner";
+  const firstName = String(displayName).split(" ")[0];
+  const initial = String(displayName).trim().charAt(0).toUpperCase() || "N";
+  const totalPoints = stats?.total_points ?? 0;
+  const currentStreak = stats?.current_streak ?? 0;
+
   return <main className="learner-app">
     <aside className="learner-sidebar">
       <Link className="brand" href="/"><span className="brand-symbol">n</span><span>nahtive<span className="brand-dot">.</span></span></Link>
@@ -10,8 +72,8 @@ export default function Dashboard() {
       <nav>
         <a className="side-active" href="#overview">⌂ &nbsp; Overview</a>
         <a href="#course-plan">▤ &nbsp; My Spanish course</a>
-        <a href="/speak">♫ &nbsp; Speak with AI tutor</a>
-        <a href="#available-lessons">◎ &nbsp; Lessons</a>
+        <Link href="/speak">♫ &nbsp; Speak with AI tutor</Link>
+        <a href="#course-levels">◎ &nbsp; Course levels</a>
       </nav>
       <div className="sidebar-bottom">
         <div className="help-card"><b>Need a hand?</b><p>Your learning guide is here to help you stay on track.</p><a href="mailto:hello@nahtive.com">Get in touch ↗</a></div>
@@ -21,70 +83,47 @@ export default function Dashboard() {
     <div className="learner-main">
       <header className="learner-topbar">
         <span>My Spanish <i>/</i> Course</span>
-        <span className="learner-profile">Spanish learner <i>S</i></span>
+        <span className="learner-profile">{displayName} <i>{initial}</i></span>
         <form action={signOut}><button className="logout-link" type="submit">Sign out</button></form>
       </header>
       <div className="learner-content" id="overview">
         <div className="welcome">
-          <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome to Spanish. <span>Let's get to work.</span></h1><p>Work through complete lessons, practice actively, and check what you have learned.</p></div>
-          <div className="level-badge"><small>COURSE LEVELS</small><b>A1–C2</b><span>All CEFR levels</span></div>
+          <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome back, {firstName}. <span>Let's get to work.</span></h1><p>Your Spanish course follows a structured path. Learn a concept, practise it, retrieve it from memory, and use it independently.</p></div>
+          <div className="level-badge"><small>YOUR STARTING LEVEL</small><b>{enrollment.starting_level}</b><span>Self-selected · CEFR</span><Link href="/onboarding">Change level</Link></div>
         </div>
-        <section className="cefr-path" aria-label="Spanish course levels">
-          <div className="cefr-path-heading"><div><small>THE COMPLETE SPANISH PATH</small><h2>One course. Six levels.</h2><p>Build from first phrases to precise, natural Spanish. Your starting point should match your current ability—not default to A2.</p></div><Link href="/speak">Practise speaking at any level ↗</Link></div>
-          <div className="cefr-level-grid">
-            <div><b>A1</b><strong>Beginner</strong><span>Build essential vocabulary, introductions, simple questions, and everyday phrases.</span></div>
-            <div><b>A2</b><strong>Elementary</strong><span>Handle familiar situations, describe routines, and talk about past and future plans.</span></div>
-            <div><b>B1</b><strong>Intermediate</strong><span>Tell stories, explain opinions, manage travel, and keep conversations moving.</span></div>
-            <div><b>B2</b><strong>Upper intermediate</strong><span>Speak with greater fluency, use varied structures, and discuss more complex topics.</span></div>
-            <div><b>C1</b><strong>Advanced</strong><span>Express nuanced ideas, adapt register, and understand idiomatic language.</span></div>
-            <div><b>C2</b><strong>Proficient</strong><span>Refine precision, style, subtle meaning, and near-native comprehension.</span></div>
-          </div>
-          <p className="cefr-path-note">Speaking practice supports all six levels now. The fully authored lesson library is being expanded level by level; the A2 past-tense lesson below is the current complete lesson.</p>
-        </section>
-        <section className="continue-card" id="available-lessons">
-          <div className="continue-copy">
-            <small>AVAILABLE TO TAKE NOW</small>
-            <div className="unit-label">A2 · UNIT 04 · LESSON 01</div>
-            <h2>Hablar del<br/>pasado</h2>
-            <p>Learn to describe completed past actions through a Spanish reading, grammar instruction, comprehension, guided practice, independent writing, and a five-question assessment.</p>
-            <div className="lesson-meta">◷ 25–30 min &nbsp;&nbsp; · &nbsp;&nbsp; Reading · Grammar · Writing · Assessment</div>
-            <Link className="button button-primary" href="/lesson">Start actual lesson <span>→</span></Link>
-            <Link className="dashboard-speak-link" href="/speak">Try live Spanish speaking practice ↗</Link>
-          </div>
-          <div className="continue-art">
-            <div className="spanish-card"><small>SPANISH IN CONTEXT</small><strong>¿Qué hiciste<br/>ayer?</strong><em>What did you do yesterday?</em><hr/><div><span>comer</span><b>comí</b><small>I ate</small></div><div><span>estudiar</span><b>estudié</b><small>I studied</small></div></div>
-            <b className="art-star">✳</b>
-          </div>
-        </section>
-        <div className="learner-grid" id="course-plan">
+
+        <section className="learner-grid" id="course-plan">
           <section className="learner-card">
-            <div className="card-title"><div><small>INSIDE THIS LESSON</small><h3>What you'll actually do</h3></div><span>6 PARTS</span></div>
-            <div className="task-list">
-              {[
-                ["01","Read","A contextual Spanish passage about a day downtown.","5 min"],
-                ["02","Understand","Learn regular preterite endings and common irregular verbs.","7 min"],
-                ["03","Comprehend","Answer questions about details in the reading.","5 min"],
-                ["04","Practice","Complete four verb-form exercises with feedback.","5 min"],
-                ["05","Produce","Write about what you did yesterday.","5 min"],
-                ["06","Assess","Complete a five-question knowledge check with explanations.","5 min"]
-              ].map(([number,title,description,time])=><button type="button" disabled key={number}><i>{number}</i><span><b>{title}</b><small>{description}</small></span><em>{time}</em></button>)}
-            </div>
-          </section>
-          <section className="learner-card">
-            <div className="card-title"><div><small>COURSE CONTENT</small><h3>Spanish learning path</h3></div></div>
-            <p className="snapshot-copy">Nahtive is being built around the full CEFR range: A1, A2, B1, B2, C1, and C2. Choose your speaking level in Speak. Only lessons that are implemented and ready to take will appear as available.</p>
+            <div className="card-title"><div><small>YOUR COURSE</small><h3>{course?.title ?? "Spanish course"}</h3></div><span>{enrollment.starting_level}</span></div>
+            <p className="snapshot-copy">{course?.description ?? "Your selected Spanish learning path."}</p>
             <div className="skill-list">
-              <div><div><span>Available now</span><b>1 lesson</b></div><div className="skill-line"><i style={{width:"12%"}}/></div></div>
-              <div><div><span>Next</span><b>A2 · Past narration</b></div><p className="snapshot-copy">Additional lessons will be added as complete learning experiences, not placeholder cards.</p></div>
+              <div><div><span>Published lessons</span><b>{publishedLessonCount}</b></div><div className="skill-line"><i style={{width: publishedLessonCount ? "100%" : "0%"}} /></div></div>
+              <div><div><span>Next step</span><b>{publishedLessonCount ? "Continue course" : "Curriculum being prepared"}</b></div><p className="snapshot-copy">{publishedLessonCount ? "Your next required lesson will appear here." : "Your level is saved. The course will unlock lessons in sequence as each unit is authored and reviewed. No placeholder lessons or fake completion stats."}</p></div>
             </div>
-            <Link className="learn-more" href="/lesson">Open available lesson ↗</Link>
+            {publishedLessonCount > 0 ? <Link className="learn-more" href="/lesson">Open your course ↗</Link> : <span className="learn-more">Course content is being built</span>}
           </section>
-        </div>
-        <section className="next-card">
-          <div><small>HONEST PROGRESS TRACKING</small><h3>Your work comes first.</h3><p>This lesson currently runs as an interactive test. Answers and progress are not yet saved to your account between visits. We are not showing made-up skill scores or completion statistics.</p></div>
-          <div className="next-levels"><b>A1</b><i/><span>A2</span><i/><span>B1</span><i/><span>B2</span><i/><span>C1</span><i/><span>C2</span></div>
+          <section className="learner-card">
+            <div className="card-title"><div><small>YOUR CONSISTENCY</small><h3>Learning record</h3></div></div>
+            <div className="cefr-level-grid" style={{gridTemplateColumns:"repeat(2,1fr)"}}>
+              <div><b>{totalPoints.toLocaleString()}</b><strong>Points earned</strong><span>Points are awarded for completed learning work.</span></div>
+              <div><b>{currentStreak}</b><strong>Day streak</strong><span>Days with recorded course activity.</span></div>
+            </div>
+            <p className="snapshot-copy">Points and streaks will grow as you complete lessons, reviews, and assessments. We only count activity recorded in your account.</p>
+          </section>
         </section>
-        <footer className="learner-footer"><span>Nahtive 2.0 · Spanish course</span><span>Interactive lesson test · Progress persistence coming next.</span></footer>
+
+        <section className="cefr-path" id="course-levels">
+          <div className="cefr-path-heading"><div><small>THE COMPLETE SPANISH PATH</small><h2>One course. Six levels.</h2><p>Your starting level is your choice. Progress is based on demonstrated ability, not a placement test.</p></div><Link href="/speak">Practise speaking ↗</Link></div>
+          <div className="cefr-level-grid">
+            {levels.map(([code,name,description])=><div key={code} style={code === enrollment.starting_level ? {borderColor:"#8176df",background:"#f5f3ff"} : undefined}><b>{code}</b><strong>{name}</strong><span>{description}</span>{code === enrollment.starting_level && <small style={{fontWeight:800,color:"#665ed1"}}>YOUR START</small>}</div>)}
+          </div>
+        </section>
+
+        <section className="next-card">
+          <div><small>THE NAHTIVE LEARNING METHOD</small><h3>Understand. Practise. Remember. Communicate.</h3><p>Each course is designed around high-frequency language, useful sentence patterns, grammar in context, spaced review, active recall, listening, and independent production. Lessons will build toward cumulative assessments rather than isolated quizzes.</p></div>
+          <div className="next-levels"><b>01</b><i/><span>02</span><i/><span>03</span><i/><span>04</span></div>
+        </section>
+        <footer className="learner-footer"><span>Nahtive 2.0 · Spanish course</span><span>Your progress is tied to your account.</span></footer>
       </div>
     </div>
   </main>;
