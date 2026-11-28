@@ -50,7 +50,7 @@ export async function signUp(formData: FormData) {
   const password = String(formData.get("password") ?? "");
   if (!email || password.length < 8) redirect(authUrl("/signup", "Use a valid email and a password with at least 8 characters."));
 
-  const origin = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://nahtive-20.vercel.app").replace(/\/+$/, "");
+  const origin = await getRequestOrigin();
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
