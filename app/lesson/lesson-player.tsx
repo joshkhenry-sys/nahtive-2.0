@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -38,7 +39,7 @@ export default function LessonPlayer({lesson,lessons,courseTitle,level}:{lesson:
       return <article className="nahtive-question" key={q.prompt}>
         <b>{i+1}. {q.prompt}</b>
         <div className="nahtive-options">{q.options.map(option=><button type="button" key={option} disabled={submitted} className={selected===option?"selected":""} onClick={()=>{setAnswers(old=>({...old,[String(index)]:option}));setShowFeedback(false);}}>{option}</button>)}</div>
-        {showFeedback&&<div className={correct?"nahtive-feedback good":"nahtive-feedback needs-work"}><strong>{correct?"Correct.":"Not quite—here's the pattern."}</strong><p>{q.explanation}</p><small>RULE: {q.rule}</small>{!correct&&<div className="nahtive-retry"><b>Try a similar example before moving on</b><p>{q.retry}</p><input value={retryAnswers[String(index)]??""} onChange={e=>setRetryAnswers(old=>({...old,[String(index)]:e.target.value}))} placeholder="Type your answer..." /><span>{retryAnswers[String(index)]?.trim().toLowerCase()===q.retryAnswer.toLowerCase()?"That's it. You applied the rule.":""}</span></div>}</div>}
+        {showFeedback&&<div className={correct?"nahtive-feedback good":"nahtive-feedback needs-work"}><strong>{correct?"Correct.":"Not quite—here&apos;s the pattern."}</strong><p>{q.explanation}</p><small>RULE: {q.rule}</small>{!correct&&<div className="nahtive-retry"><b>Try a similar example before moving on</b><p>{q.retry}</p><input value={retryAnswers[String(index)]??""} onChange={e=>setRetryAnswers(old=>({...old,[String(index)]:e.target.value}))} placeholder="Type your answer..." /><span>{retryAnswers[String(index)]?.trim().toLowerCase()===q.retryAnswer.toLowerCase()?"That's it. You applied the rule.":""}</span></div>}</div>}
       </article>;
     })}</div>;
   }
@@ -48,14 +49,14 @@ export default function LessonPlayer({lesson,lessons,courseTitle,level}:{lesson:
     <div className="lesson-layout">
       <aside className="lesson-outline"><div className="outline-kicker">YOUR COURSE · {level}</div><h2>{lesson.title}</h2><p>{lesson.description}</p><div className="outline-progress"><div><span>Lesson progress</span><b>{Math.round((sectionIndex+1)/sections.length*100)}%</b></div><i><span style={{width:((sectionIndex+1)/sections.length*100)+"%"}}/></i></div>
         <nav>{sections.map((s,i)=><button key={i} className={sectionIndex===i?"outline-active":i<sectionIndex?"outline-done":""} onClick={()=>setSectionIndex(i)}><span>{i<sectionIndex?"✓":String(i+1).padStart(2,"0")}</span>{s.title}</button>)}</nav>
-        <div className="outline-tip"><b>Today's objective</b><p>{lesson.content.objective}</p></div>
+        <div className="outline-tip"><b>Today&apos;s objective</b><p>{lesson.content.objective}</p></div>
         <div className="outline-tip"><b>Course sequence</b>{lessons.map(l=><p key={l.id}>{l.completed?"✓ ":""}{l.sequence}. {l.title}</p>)}</div>
       </aside>
       <section className="lesson-main"><div className="lesson-topline"><span>SPANISH · {level}</span><span>{lesson.estimated_minutes} MIN · {lesson.points_reward} POINTS</span></div>
         <article className="lesson-panel">
           <div className="lesson-section-label">{section.eyebrow}</div><h1>{section.title}</h1>
           {section.body&&<p className="lesson-intro">{section.body}</p>}
-          {section.type==="intro"&&<div className="lesson-callout"><b>What you'll be able to do</b><p>{lesson.content.objective}</p></div>}
+          {section.type==="intro"&&<div className="lesson-callout"><b>What you&apos;ll be able to do</b><p>{lesson.content.objective}</p></div>}
           {section.type==="vocabulary"&&<><div className="nahtive-vocab-grid">{section.items.map((item:any)=><div key={item.term}><b>{item.term}</b><span>{item.meaning}</span><em>{item.example}</em></div>)}</div><div className="lesson-callout"><b>Study strategy</b><p>{section.note}</p></div></>}
           {section.type==="reading"&&<><p className="lesson-intro">{section.instructions}</p><div className="reading-card"><div className="reading-card-top"><span>LECTURA · LATINOAMÉRICA</span><span>READ ALOUD ×2</span></div><p>{section.text}</p><div className="reading-gloss"><b>Useful words from the passage</b><span>{section.glossary.map((x:string[])=>x.join(" = ")).join(" · ")}</span></div></div></>}
           {section.type==="grammar"&&<><p className="lesson-intro">{section.body}</p><div className="nahtive-example-list">{section.examples.map((x:string[])=><div key={x[0]}><strong>{x[0]}</strong><span>{x[1]}</span></div>)}</div><h3 className="lesson-h3">{section.table.heading}</h3><div className="nahtive-table-wrap"><table className="nahtive-table"><thead><tr>{section.table.columns.map((c:string)=><th key={c}>{c}</th>)}</tr></thead><tbody>{section.table.rows.map((row:string[])=><tr key={row[0]}>{row.map((cell:string)=><td key={cell}>{cell}</td>)}</tr>)}</tbody></table></div><div className="lesson-callout"><b>Important distinction</b><p>{section.note}</p></div><h3 className="lesson-h3">Build the sentence</h3><div className="grammar-example"><span>WORD ORDER</span><strong>{section.pattern}</strong><small>{section.patternExample}</small></div><ol className="nahtive-steps">{section.steps.map((s:string)=><li key={s}>{s}</li>)}</ol></>}
