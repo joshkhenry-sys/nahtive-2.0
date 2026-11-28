@@ -1,4 +1,5 @@
 "use server";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from "@/lib/supabase/server";
 type Question={prompt:string;options:string[];answer:string;explanation:string;rule:string;retry:string;retryAnswer:string};
 export async function submitLessonAttempt(formData:FormData) {
