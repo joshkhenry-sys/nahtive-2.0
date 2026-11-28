@@ -42,7 +42,7 @@ export default async function OnboardingPage({
           <div className="speak-levels">
             {levels.map((item) => (
               <label key={item.code} className="onboarding-level">
-                <input type="radio" name="level" value={item.code} required />
+                <input type="radio" name="level" value={item.code} defaultChecked={item.code === "A2"} required />
                 <b>{item.code}</b><small>{item.name}</small><span>{item.detail}</span>
               </label>
             ))}
