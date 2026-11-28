@@ -259,3 +259,49 @@ body{font-size:16px}.site-header nav{font-size:14px}.hero-lede{font-size:17px}
 
 .speak-settings .speak-levels{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(max-width:650px){.speak-settings .speak-levels{grid-template-columns:1fr}}
+
+
+/* Structured curriculum lesson player */
+.nahtive-vocab-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.nahtive-vocab-grid>div{display:flex;flex-direction:column;gap:7px;border:1px solid #e7e9f0;border-radius:12px;padding:16px;background:#fff}
+.nahtive-vocab-grid b{font-size:18px;color:#252b43}
+.nahtive-vocab-grid span{font-size:13px;color:#7165d7;font-weight:700}
+.nahtive-vocab-grid em{font-size:13px;color:#6e7688;line-height:1.5}
+.nahtive-example-list{display:grid;gap:10px;margin:18px 0}
+.nahtive-example-list>div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;border-left:3px solid #8277df;padding:12px 15px;background:#f7f6ff;border-radius:0 9px 9px 0}
+.nahtive-example-list strong{font-size:15px;color:#282d45}
+.nahtive-example-list span{font-size:13px;color:#737b8e}
+.nahtive-table-wrap{overflow-x:auto;margin:14px 0 22px}
+.nahtive-table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
+.nahtive-table th,.nahtive-table td{padding:12px 10px;border-bottom:1px solid #e8eaf0;text-align:left}
+.nahtive-table th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#777f91;background:#f7f8fb}
+.nahtive-table td{color:#343b51}
+.nahtive-table td:not(:first-child){font-weight:750}
+.nahtive-steps{padding-left:22px;line-height:1.9;color:#596176;font-size:14px}
+.nahtive-question-list{display:grid;gap:20px;margin:22px 0}
+.nahtive-question{border:1px solid #e6e8ef;border-radius:13px;padding:18px;background:#fff}
+.nahtive-question>b{display:block;font-size:15px;line-height:1.6;color:#282f48;margin-bottom:13px}
+.nahtive-options{display:flex;flex-wrap:wrap;gap:9px}
+.nahtive-options button{border:1px solid #dfe2ec;background:#fff;color:#343b52;border-radius:9px;padding:10px 13px;font-size:13px;cursor:pointer}
+.nahtive-options button.selected{border-color:#796ee0;background:#f2f0ff;color:#4f45ad;font-weight:800}
+.nahtive-options button:disabled{opacity:.8;cursor:default}
+.nahtive-feedback{margin-top:14px;padding:14px;border-radius:10px}
+.nahtive-feedback.good{background:#eff8f2;border:1px solid #d7ecdd}
+.nahtive-feedback.needs-work{background:#fff7eb;border:1px solid #f1e1c7}
+.nahtive-feedback strong{font-size:13px}
+.nahtive-feedback p{font-size:13px;line-height:1.6;color:#535c70;margin:7px 0}
+.nahtive-feedback small{font-size:10px;font-weight:800;letter-spacing:.06em;color:#676f83}
+.nahtive-retry{margin-top:12px;padding-top:12px;border-top:1px solid #e2dfd6}
+.nahtive-retry b{font-size:12px}
+.nahtive-retry p{margin:5px 0}
+.nahtive-retry input{width:100%;max-width:420px;padding:10px;border:1px solid #dfe2ec;border-radius:8px;margin-top:6px}
+.nahtive-retry span{display:block;color:#23814b;font-size:12px;font-weight:700;margin-top:5px}
+.nahtive-production{width:100%;padding:15px;border:1px solid #dfe2ec;border-radius:10px;font:inherit;line-height:1.7;color:#30364e;resize:vertical}
+.nahtive-production:focus,.nahtive-retry input:focus{outline:2px solid #8177df;outline-offset:1px}
+.lesson-panel details{margin-top:8px;font-size:13px;color:#555e73}
+.lesson-panel summary{cursor:pointer;font-weight:750;color:#665bd0}
+.lesson-panel details p{line-height:1.7}
+.lesson-outline .outline-tip p{margin:7px 0;font-size:12px;line-height:1.5}
+.lesson-navigation .lesson-next{cursor:pointer}
+.lesson-navigation button:disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:700px){.nahtive-vocab-grid{grid-template-columns:1fr}.nahtive-options{flex-direction:column}.nahtive-options button{text-align:left}}
