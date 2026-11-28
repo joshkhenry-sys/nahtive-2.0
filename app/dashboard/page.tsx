@@ -88,7 +88,7 @@ export default async function Dashboard() {
       </header>
       <div className="learner-content" id="overview">
         <div className="welcome">
-          <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome back, {firstName}. <span>Let's get to work.</span></h1><p>Your Spanish course follows a structured path. Learn a concept, practise it, retrieve it from memory, and use it independently.</p></div>
+          <div><div className="eyebrow">YOUR LEARNING SPACE</div><h1>Welcome back, {firstName}. <span>Let&apos;s get to work.</span></h1><p>Your Spanish course follows a structured path. Learn a concept, practise it, retrieve it from memory, and use it independently.</p></div>
           <div className="level-badge"><small>YOUR STARTING LEVEL</small><b>{enrollment.starting_level}</b><span>Self-selected · CEFR</span><Link href="/onboarding">Change level</Link></div>
         </div>
 
