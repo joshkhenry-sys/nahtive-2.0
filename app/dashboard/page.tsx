@@ -1,9 +1,9 @@
 import Link from "next/link";
-
-export const dynamic = "force-dynamic";
 import { redirect } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import { createClient } from "@/lib/supabase/server";
+
+export const dynamic = "force-dynamic";
 
 const levels = [
   ["A1", "Beginner", "Build essential vocabulary and first sentence patterns."],
