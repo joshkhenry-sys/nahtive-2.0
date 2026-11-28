@@ -244,3 +244,15 @@ body{font-size:16px}.site-header nav{font-size:14px}.hero-lede{font-size:17px}
 @media(max-width:600px){.cefr-path{padding:17px}.cefr-path-heading{display:block}.cefr-path-heading>a{display:inline-block;margin-top:12px}.cefr-level-grid{grid-template-columns:repeat(2,1fr)}.cefr-level-grid>div{min-height:115px}}
 
 .speak-start:disabled{opacity:.4;cursor:not-allowed;filter:grayscale(.3)}
+
+
+/* Learner-selected CEFR onboarding */
+.onboarding-level{position:relative;display:grid;grid-template-columns:48px 1fr;align-items:center;gap:2px 12px;text-align:left;border:1px solid #e6e8f0;background:#fff;border-radius:11px;padding:14px 13px;cursor:pointer;min-height:84px}
+.onboarding-level input{position:absolute;top:14px;right:14px;accent-color:#7165d7;width:17px;height:17px}
+.onboarding-level>b{grid-row:span 2;font:800 21px Manrope;color:#665ed1}
+.onboarding-level>small{font-size:13px;font-weight:800;color:#303650}
+.onboarding-level>span{font-size:11px;line-height:1.5;color:#788197;max-width:90%}
+.onboarding-level:has(input:checked){border-color:#8278e2;background:#f5f3ff;box-shadow:0 0 0 2px #8278e21a}
+.speak-settings>.speak-start{display:block;margin:18px 0 0 auto}
+.level-badge a{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;color:#665ed1;text-decoration:none}
+@media(max-width:650px){.onboarding-level{grid-template-columns:40px 1fr;padding:12px}.onboarding-level>span{font-size:10px}}
