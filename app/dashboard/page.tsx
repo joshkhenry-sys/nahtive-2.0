@@ -102,7 +102,7 @@ export default async function Dashboard() {
               <div><div><span>Published lessons</span><b>{publishedLessonCount}</b></div><div className="skill-line"><i style={{width: publishedLessonCount ? "100%" : "0%"}} /></div></div>
               <div><div><span>Next step</span><b>{publishedLessonCount ? "Continue course" : "Curriculum being prepared"}</b></div><p className="snapshot-copy">{publishedLessonCount ? "Your next required lesson will appear here." : "Your level is saved. The course will unlock lessons in sequence as each unit is authored and reviewed. No placeholder lessons or fake completion stats."}</p></div>
             </div>
-            {publishedLessonCount > 0 ? <Link className="learn-more" href="/lesson">Open your course ↗</Link> : <span className="learn-more">Course content is being built</span>}
+            {publishedLessonCount > 0 ? <Link className="learn-more" href="/lesson">Continue your course ↗</Link> : <span className="learn-more">Course content is being built</span>}
           </section>
           <section className="learner-card">
             <div className="card-title"><div><small>YOUR CONSISTENCY</small><h3>Learning record</h3></div></div>
