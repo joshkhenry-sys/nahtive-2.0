@@ -12,10 +12,13 @@ export async function submitLessonAttempt(formData:FormData) {
  if(production.length<20) throw new Error("Write at least a few complete sentences before submitting.");
  const {data:lesson,error}=await supabase.from("lessons").select("id,content,points_reward,is_published").eq("id",lessonId).eq("is_published",true).single();
  if(error||!lesson) throw new Error("This lesson is not available.");
- const questions:Question[]=(lesson.content.sections??[]).filter((s:any)=>s.type==="practice"||s.type==="assessment").flatMap((s:any)=>s.questions);
- if(!questions.length||questions.some((q,i)=>!answers[String(i)])) throw new Error("Answer every question before submitting.");
- const feedback=questions.map((q,i)=>({prompt:q.prompt,selected:answers[String(i)],correct:answers[String(i)]===q.answer,answer:q.answer,explanation:q.explanation,rule:q.rule,retry:q.retry,retryAnswer:q.retryAnswer}));
- const correct=feedback.filter(f=>f.correct).length; const score=Math.round(correct/questions.length*100); const passed=score>=80;
+ const allQuestions:Question[]=(lesson.content.sections??[]).filter((s:any)=>s.type==="practice"||s.type==="assessment").flatMap((s:any)=>s.questions);
+ const assessmentQuestions:Question[]=(lesson.content.sections??[]).filter((s:any)=>s.type==="assessment").flatMap((s:any)=>s.questions);
+ if(!assessmentQuestions.length||allQuestions.some((q,i)=>!answers[String(i)])) throw new Error("Answer every question before submitting.");
+ const feedback=allQuestions.map((q,i)=>({prompt:q.prompt,selected:answers[String(i)],correct:answers[String(i)]===q.answer,answer:q.answer,explanation:q.explanation,rule:q.rule,retry:q.retry,retryAnswer:q.retryAnswer}));
+ const assessmentOffset=allQuestions.length-assessmentQuestions.length;
+ const assessmentFeedback=feedback.slice(assessmentOffset);
+ const correct=assessmentFeedback.filter(f=>f.correct).length; const score=Math.round(correct/assessmentQuestions.length*100); const passed=score>=80;
  const {error:attemptError}=await supabase.from("lesson_attempts").insert({user_id:user.id,lesson_id:lessonId,answers:{...answers,production},score,feedback});
  if(attemptError) throw new Error("We couldn't save your attempt. Please try again.");
  const {data:prior}=await supabase.from("lesson_progress").select("points_earned,attempts,best_score").eq("user_id",user.id).eq("lesson_id",lessonId).maybeSingle();
